@@ -1,7 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/PetsCape/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/PetsCape/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/PetsCape/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/PetsCape/tests" isTestSource="true" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/PetsCape/tests/Feature" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/PetsCape/tests/Unit" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/brick/math" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/carbonphp/carbon-doctrine-types" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/dflydev/dot-access-data" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/doctrine/inflector" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/dragonmantank/cron-expression" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/fakerphp/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/filp/whoops" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/fruitcake/php-cors" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/graham-campbell/result-type" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/guzzlehttp/uri-template" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/hamcrest/hamcrest-php" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/laravel/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/laravel/pail" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/laravel/pint" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/laravel/prompts" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/laravel/sail" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/laravel/serializable-closure" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/laravel/tinker" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/league/commonmark" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/league/config" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/league/flysystem-local" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/league/uri" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/league/uri-interfaces" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/mockery/mockery" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/myclabs/deep-copy" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/nesbot/carbon" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/nette/schema" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/nette/utils" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/nikic/php-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/nunomaduro/collision" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/nunomaduro/termwind" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/phar-io/manifest" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/phar-io/version" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/phpoption/phpoption" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/phpunit/php-code-coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/phpunit/php-file-iterator" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/phpunit/php-invoker" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/phpunit/php-text-template" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/phpunit/php-timer" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/psr/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/psr/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/psy/psysh" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/ramsey/collection" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/ramsey/uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/cli-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/code-unit" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/code-unit-reverse-lookup" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/comparator" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/complexity" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/environment" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/global-state" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/lines-of-code" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/object-enumerator" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/object-reflector" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/recursion-context" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/type" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/sebastian/version" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/staabm/side-effects-detector" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/css-selector" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/error-handler" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/event-dispatcher-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/finder" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/http-foundation" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/http-kernel" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/mailer" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/polyfill-intl-normalizer" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/polyfill-php80" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/polyfill-php83" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/polyfill-uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/routing" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/translation" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/translation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/uid" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/theseer/tokenizer" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/tijsverkoyen/css-to-inline-styles" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/vlucas/phpdotenv" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/voku/portable-ascii" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/webmozart/assert" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
