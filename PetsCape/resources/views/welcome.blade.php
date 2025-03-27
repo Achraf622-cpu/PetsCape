@@ -25,17 +25,28 @@
                 <h1 class="text-2xl font-bold text-[#2F2E41]">PetsCape</h1>
             </div>
             <div class="hidden md:flex items-center gap-12">
-                <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
+                <a href="/" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
                 <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
                 <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Boutique</a>
-                <a href="{{ route('login') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Se connecter</a>
-                <a href="{{ route('register') }}" class="px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
-                    S'inscrire
-                </a>
+                @auth
+                    <a href="{{ route('dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
+                            Déconnexion
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Se connecter</a>
+                    <a href="{{ route('register') }}" class="px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
+                        S'inscrire
+                    </a>
+                @endauth
             </div>
         </div>
     </div>
 </nav>
+
 
 <!-- Menu mobile -->
 <div class="md:hidden">
