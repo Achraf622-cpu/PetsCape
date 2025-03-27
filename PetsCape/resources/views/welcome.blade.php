@@ -24,6 +24,17 @@
                 <div class="w-10 h-10 bg-[#FF6B6B] blob-shape"></div>
                 <h1 class="text-2xl font-bold text-[#2F2E41]">PetsCape</h1>
             </div>
+
+            <!-- Menu mobile -->
+            <div class="block md:hidden">
+                <button class="p-2" id="mobile-menu-button">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Menu desktop -->
             <div class="hidden md:flex items-center gap-12">
                 <a href="/" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
                 <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
@@ -45,28 +56,32 @@
             </div>
         </div>
     </div>
+
+    <!-- Menu mobile panel -->
+    <div class="hidden md:hidden absolute top-20 left-0 right-0 bg-white p-4 shadow-lg" id="mobile-menu">
+        <div class="flex flex-col gap-4">
+            <a href="/" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
+            <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
+            <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Boutique</a>
+            @auth
+                <a href="{{ route('dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full text-center px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
+                        Déconnexion
+                    </button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Se connecter</a>
+                <a href="{{ route('register') }}" class="text-center px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
+                    S'inscrire
+                </a>
+            @endauth
+        </div>
+    </div>
 </nav>
 
 
-<!-- Menu mobile -->
-<div class="md:hidden">
-    <button class="p-2" id="mobile-menu-button">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
-    </button>
-    <div class="hidden absolute top-20 left-0 right-0 bg-white p-4 shadow-lg" id="mobile-menu">
-        <div class="flex flex-col gap-4">
-            <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
-            <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
-            <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Boutique</a>
-            <a href="{{ route('login') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Se connecter</a>
-            <a href="{{ route('register') }}" class="text-center px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
-                S'inscrire
-            </a>
-        </div>
-    </div>
-</div>
 
 <!-- Hero Section -->
 <div class="pt-32 pb-20 px-6">
