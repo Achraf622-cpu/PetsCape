@@ -54,44 +54,56 @@
         <!-- Section droite (formulaire) -->
         <div class="lg:w-7/12 p-8 lg:p-12">
             <div class="max-w-md mx-auto space-y-8">
-                <div>
-                    <h1 class="text-3xl font-bold text-[#2F2E41]">Créer un compte</h1>
-                    <p class="text-gray-600 mt-2">Déjà membre? <a href="#" class="text-[#FF6B6B] hover:text-[#FF8787]">Se connecter</a></p>
-                </div>
+                @if (session('status'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
-                <form class="space-y-6">
+                @if ($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('register') }}" class="space-y-6">
+                    @csrf
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-2">
                             <label class="block text-[#2F2E41] font-semibold" for="firstname">Prénom</label>
-                            <input type="text" id="firstname" class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors" placeholder="Jean">
+                            <input type="text" id="firstname" name="firstname" value="{{ old('firstname') }}" required class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors" placeholder="Jean">
                         </div>
                         <div class="space-y-2">
                             <label class="block text-[#2F2E41] font-semibold" for="lastname">Nom</label>
-                            <input type="text" id="lastname" class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors" placeholder="Dupont">
+                            <input type="text" id="lastname" name="lastname" value="{{ old('lastname') }}" required class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors" placeholder="Dupont">
                         </div>
                     </div>
 
                     <div class="space-y-2">
                         <label class="block text-[#2F2E41] font-semibold" for="email">Email</label>
-                        <input type="email" id="email" class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors" placeholder="votre@email.com">
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" required class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors" placeholder="votre@email.com">
                     </div>
 
                     <div class="space-y-2">
                         <label class="block text-[#2F2E41] font-semibold" for="password">Mot de passe</label>
-                        <input type="password" id="password" class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors" placeholder="8+ caractères">
+                        <input type="password" id="password" name="password" required class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors" placeholder="8+ caractères">
                     </div>
 
                     <div class="space-y-2">
-                        <label class="block text-[#2F2E41] font-semibold" for="confirm-password">Confirmer le mot de passe</label>
-                        <input type="password" id="confirm-password" class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors" placeholder="8+ caractères">
+                        <label class="block text-[#2F2E41] font-semibold" for="password_confirmation">Confirmer le mot de passe</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" required class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors" placeholder="8+ caractères">
                     </div>
 
                     <label class="flex items-center gap-3 cursor-pointer">
-                        <input type="checkbox" class="w-5 h-5 accent-[#FF6B6B]">
+                        <input type="checkbox" name="terms" required class="w-5 h-5 accent-[#FF6B6B]">
                         <span class="text-gray-600 text-sm">
-                                J'accepte les <a href="#" class="text-[#FF6B6B] hover:text-[#FF8787]">conditions d'utilisation</a>
-                                et la <a href="#" class="text-[#FF6B6B] hover:text-[#FF8787]">politique de confidentialité</a>
-                            </span>
+                        J'accepte les <a href="#" class="text-[#FF6B6B] hover:text-[#FF8787]">conditions d'utilisation</a>
+                        et la <a href="#" class="text-[#FF6B6B] hover:text-[#FF8787]">politique de confidentialité</a>
+                    </span>
                     </label>
 
                     <button type="submit" class="w-full py-4 bg-[#FF6B6B] text-white rounded-xl hover:bg-[#FF8787] transition-all duration-300 transform hover:scale-105">
@@ -117,6 +129,18 @@
         input.addEventListener('blur', () => {
             input.parentElement.classList.remove('transform', 'scale-[1.02]');
         });
+    });
+    // Validation du formulaire côté client
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('password_confirmation').value;
+
+        if (password !== confirmPassword) {
+            e.preventDefault();
+            alert('Les mots de passe ne correspondent pas !');
+            return false;
+        }
     });
 
     // Validation basique du formulaire

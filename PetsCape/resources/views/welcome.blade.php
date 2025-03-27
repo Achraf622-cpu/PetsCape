@@ -28,13 +28,34 @@
                 <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
                 <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
                 <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Boutique</a>
-                <a href="#" class="px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
-                    Nous contacter
+                <a href="{{ route('login') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Se connecter</a>
+                <a href="{{ route('register') }}" class="px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
+                    S'inscrire
                 </a>
             </div>
         </div>
     </div>
 </nav>
+
+<!-- Menu mobile -->
+<div class="md:hidden">
+    <button class="p-2" id="mobile-menu-button">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+    </button>
+    <div class="hidden absolute top-20 left-0 right-0 bg-white p-4 shadow-lg" id="mobile-menu">
+        <div class="flex flex-col gap-4">
+            <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
+            <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
+            <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Boutique</a>
+            <a href="{{ route('login') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Se connecter</a>
+            <a href="{{ route('register') }}" class="text-center px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
+                S'inscrire
+            </a>
+        </div>
+    </div>
+</div>
 
 <!-- Hero Section -->
 <div class="pt-32 pb-20 px-6">
@@ -134,5 +155,14 @@
             featuredPetsContainer.innerHTML += card;
         });
     });
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    });
+
 </script>
 </html>
