@@ -183,20 +183,30 @@
             featuredPetsContainer.innerHTML += card;
         });
     });
+
+
     document.addEventListener('DOMContentLoaded', () => {
+        // Menu mobile toggle existant
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-    });
+        window.confirmMobileLogout = function() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                document.getElementById('mobile-logout-form').submit();
+            }
+        };
 
-    function confirmLogout() {
+
+
+        function confirmLogout() {
         if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
             document.getElementById('logout-form').submit();
         }
     }
+    });
 
 
 </script>
