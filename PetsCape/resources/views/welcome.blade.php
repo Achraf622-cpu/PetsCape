@@ -58,16 +58,18 @@
     </div>
 
     <!-- Menu mobile panel -->
-    <div class="hidden md:hidden absolute top-20 left-0 right-0 bg-white p-4 shadow-lg" id="mobile-menu">
+    <div class="hidden md:hidden absolute top-20 left-0 right-0 bg-white p-4 shadow-lg z-50" id="mobile-menu">
         <div class="flex flex-col gap-4">
             <a href="/" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
             <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
             <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Boutique</a>
             @auth
                 <a href="{{ route('dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" id="mobile-logout-form">
                     @csrf
-                    <button type="submit" class="w-full text-center px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
+                    <button type="button"
+                            onclick="confirmMobileLogout()"
+                            class="w-full text-center px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
                         Déconnexion
                     </button>
                 </form>
