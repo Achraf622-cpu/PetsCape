@@ -45,7 +45,20 @@
                     <p class="text-gray-600">Connectez-vous pour retrouver vos compagnons préférés</p>
                 </div>
 
-                <form class="space-y-6">
+                <form class="space-y-6" method="POST" action="{{ route('login') }}">
+                    @csrf
+
+                    <!-- Affichage des erreurs de session -->
+                    @if ($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mb-4">
+                            <ul class="list-disc list-inside">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="space-y-3">
                         <label class="block text-[#2F2E41] font-semibold" for="email">
                             Email
@@ -53,8 +66,12 @@
                         <input
                             type="email"
                             id="email"
-                            class="w-full px-6 py-4 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors"
+                            name="email"
+                            value="{{ old('email') }}"
+                            class="w-full px-6 py-4 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors @error('email') border-red-500 @enderror"
                             placeholder="votre@email.com"
+                            required
+                            autofocus
                         >
                     </div>
 
@@ -65,24 +82,27 @@
                         <input
                             type="password"
                             id="password"
-                            class="w-full px-6 py-4 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors"
+                            name="password"
+                            class="w-full px-6 py-4 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none transition-colors @error('password') border-red-500 @enderror"
                             placeholder="••••••••"
+                            required
                         >
                     </div>
 
                     <div class="flex items-center justify-between">
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" class="w-5 h-5 accent-[#FF6B6B]">
+                            <input type="checkbox" name="remember" id="remember" class="w-5 h-5 accent-[#FF6B6B]">
                             <span class="text-gray-600">Se souvenir de moi</span>
                         </label>
-                        <a href="#" class="text-[#FF6B6B] hover:text-[#FF8787]">
+                        <a href="{{ route('password.request') }}" class="text-[#FF6B6B] hover:text-[#FF8787]">
                             Mot de passe oublié?
                         </a>
                     </div>
 
-                    <button class="w-full py-4 bg-[#FF6B6B] text-white rounded-xl hover:bg-[#FF8787] transition-all duration-300 transform hover:scale-105">
+                    <button type="submit" class="w-full py-4 bg-[#FF6B6B] text-white rounded-xl hover:bg-[#FF8787] transition-all duration-300 transform hover:scale-105">
                         Se connecter
                     </button>
+
 
                     <p class="text-center text-gray-600">
                         Pas encore membre?
