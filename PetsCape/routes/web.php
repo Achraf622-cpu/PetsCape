@@ -9,6 +9,9 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AnimalReportController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserSettingsController;
 
 Auth::routes(['verify' => true]);
 Auth::routes();
@@ -31,7 +34,61 @@ Route::post('/logout', [LogoutController::class, 'logout'])
     ->name('logout');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $myReports = \App\Models\AnimalReport::where('user_id', auth()->id())
+        ->with('species')
+        ->latest()
+        ->take(5)
+        ->get();
+        
+    $lostReports = \App\Models\AnimalReport::where('is_found', false)
+        ->with(['species', 'user'])
+        ->latest()
+        ->take(5)
+        ->get();
+        
+    $foundReports = \App\Models\AnimalReport::where('is_found', true)
+        ->with(['species', 'user'])
+        ->latest()
+        ->take(5)
+        ->get();
+        
+    // Add Reports data
+    $myOldReports = \App\Models\Report::where('user_id', auth()->id())
+        ->with('species')
+        ->latest()
+        ->take(5)
+        ->get();
+        
+    // Combine new and old reports for display
+    $combinedMyReports = $myReports->merge($myOldReports)
+        ->sortByDesc('created_at')
+        ->take(5);
+        
+    $oldLostReports = \App\Models\Report::where('is_found', false)
+        ->with(['species', 'user'])
+        ->latest()
+        ->take(5)
+        ->get();
+        
+    $combinedLostReports = $lostReports->merge($oldLostReports)
+        ->sortByDesc('created_at')
+        ->take(5);
+        
+    $oldFoundReports = \App\Models\Report::where('is_found', true)
+        ->with(['species', 'user'])
+        ->latest()
+        ->take(5)
+        ->get();
+        
+    $combinedFoundReports = $foundReports->merge($oldFoundReports)
+        ->sortByDesc('created_at')
+        ->take(5);
+        
+    return view('dashboard', [
+        'myReports' => $combinedMyReports,
+        'lostReports' => $combinedLostReports,
+        'foundReports' => $combinedFoundReports
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Routes de vérification d'email
@@ -46,10 +103,6 @@ Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'
 Route::post('/email/verification-notification', [VerificationController::class, 'resend'])
     ->middleware(['auth', 'throttle:6,1'])
     ->name('verification.resend');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Animal routes
 Route::middleware(['auth'])->group(function () {
@@ -84,5 +137,44 @@ Route::get('/adoption/{animal}/meeting', [AnimalController::class, 'meetingPage'
 Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointments.store')->middleware('auth');
 Route::patch('/appointment/{appointment}/status', [AppointmentController::class, 'updateStatus'])->name('appointments.update-status')->middleware('auth');
 Route::delete('/appointment/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel')->middleware('auth');
+
+// Animal report routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/reports', [AnimalReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/create', [AnimalReportController::class, 'create'])->name('reports.create');
+    Route::post('/reports', [AnimalReportController::class, 'store'])->name('reports.store');
+    Route::get('/reports/{report}', [AnimalReportController::class, 'show'])->name('reports.show');
+    Route::get('/reports/{report}/edit', [AnimalReportController::class, 'edit'])->name('reports.edit');
+    Route::put('/reports/{report}', [AnimalReportController::class, 'update'])->name('reports.update');
+    Route::delete('/reports/{report}', [AnimalReportController::class, 'destroy'])->name('reports.destroy');
+    Route::patch('/reports/{report}/status', [AnimalReportController::class, 'changeStatus'])->name('reports.change-status');
+    Route::get('/my-reports', [AnimalReportController::class, 'myReports'])->name('reports.my');
+});
+
+// Routes pour les anciens signalements
+Route::middleware(['auth'])->prefix('old-reports')->name('old-reports.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\ReportController::class, 'index'])->name('index');
+    Route::get('/create', [\App\Http\Controllers\ReportController::class, 'create'])->name('create');
+    Route::post('/', [\App\Http\Controllers\ReportController::class, 'store'])->name('store');
+    Route::get('/{report}', [\App\Http\Controllers\ReportController::class, 'show'])->name('show');
+    Route::get('/{report}/edit', [\App\Http\Controllers\ReportController::class, 'edit'])->name('edit');
+    Route::put('/{report}', [\App\Http\Controllers\ReportController::class, 'update'])->name('update');
+    Route::delete('/{report}', [\App\Http\Controllers\ReportController::class, 'destroy'])->name('destroy');
+    Route::patch('/{report}/status', [\App\Http\Controllers\ReportController::class, 'changeStatus'])->name('changeStatus');
+});
+
+// User settings routes
+Route::middleware(['auth'])->prefix('settings')->name('settings.')->group(function () {
+    Route::get('/', [UserSettingsController::class, 'index'])->name('index');
+    
+    Route::get('/profile', [UserSettingsController::class, 'editProfile'])->name('profile');
+    Route::post('/profile', [UserSettingsController::class, 'updateProfile'])->name('profile.update');
+    
+    Route::get('/password', [UserSettingsController::class, 'editPassword'])->name('password');
+    Route::post('/password', [UserSettingsController::class, 'updatePassword'])->name('password.update');
+    
+    Route::get('/account', [UserSettingsController::class, 'editAccount'])->name('account');
+    Route::delete('/account', [UserSettingsController::class, 'deleteAccount'])->name('account.delete');
+});
 
 
