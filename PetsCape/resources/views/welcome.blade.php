@@ -43,7 +43,7 @@
                     <a href="{{ route('dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
                     <form method="POST" action="{{ route('logout') }}" class="inline" id="logout-form">
                         @csrf
-                        <button type="button" onclick="confirmLogout()" class="px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
+                        <button type="button" onclick="if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) document.getElementById('logout-form').submit();" class="px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
                             Déconnexion
                         </button>
                     </form>

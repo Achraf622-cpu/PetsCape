@@ -54,3 +54,19 @@ Route::post('/email/verification-notification', [VerificationController::class, 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Animal routes
+Route::middleware(['auth'])->group(function () {
+    Route::resource('animals', \App\Http\Controllers\AnimalController::class);
+});
+
+// Admin-only animal routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/animals', [\App\Http\Controllers\AnimalController::class, 'index'])->name('admin.animals');
+    // You can add more admin-specific routes here
+});
+
+// Species routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('species', \App\Http\Controllers\SpeciesController::class);
+});
