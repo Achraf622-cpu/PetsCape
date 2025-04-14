@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +13,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Création d'un utilisateur administrateur
+        User::create([
+            'firstname' => 'Admin',
+            'lastname' => 'PetsCape',
+            'email' => 'admin@petscape.fr',
+            'password' => Hash::make('password123'),
+            'role' => 'admin',
+            'email_verified_at' => now(),
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Création d'un utilisateur standard
+        User::create([
+            'firstname' => 'Jean',
+            'lastname' => 'Dupont',
+            'email' => 'user@petscape.fr',
+            'password' => Hash::make('password123'),
+            'role' => 'user',
+            'email_verified_at' => now(),
+        ]);
+
+        // Appel des autres seeders
+        $this->call([
+            SpeciesSeeder::class,
+            AnimalSeeder::class,
         ]);
     }
 }

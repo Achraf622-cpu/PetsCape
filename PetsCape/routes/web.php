@@ -6,7 +6,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\LogoutController;
-
+use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AdminController;
 
 Auth::routes(['verify' => true]);
 Auth::routes();
@@ -21,18 +23,12 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 });
 
-
-
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
-
-
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -72,31 +68,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
-
-    Route::get('/animals', [\App\Http\Controllers\AnimalController::class, 'index'])->name('animals');
-    Route::get('/appointments', function () {
-        return view('admin.appointments');
-    })->name('appointments');
-    Route::get('/adoptions', function () {
-        return view('admin.adoptions');
-    })->name('adoptions');
-    Route::get('/users', function () {
-        return view('admin.users');
-    })->name('users');
-    Route::get('/reports', function () {
-        return view('admin.reports');
-    })->name('reports');
-
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/animals', [AdminController::class, 'animals'])->name('animals');
+    Route::get('/appointments', [AdminController::class, 'appointments'])->name('appointments');
+    Route::get('/adoptions', [AdminController::class, 'adoptions'])->name('adoptions');
+    Route::get('/users', [AdminController::class, 'users'])->name('users');
+    Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
 });
 
-Route::get('/adopter', function () {
-    return view('animal.pet_adoption_page');
-})->name('adopter');
-
 Route::get('/adoption', [AnimalController::class, 'adoptionPage'])->name('animals.adoption');
+Route::get('/adoption/{animal}', [AnimalController::class, 'show'])->name('animals.show');
 Route::get('/adoption/{animal}/meeting', [AnimalController::class, 'meetingPage'])->name('animals.meeting');
 
 // Routes pour les rendez-vous

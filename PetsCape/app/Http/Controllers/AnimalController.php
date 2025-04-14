@@ -12,10 +12,61 @@ class AnimalController extends Controller
     /**
      * Display a listing of the animals.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $animals = Animal::with('species')->latest()->paginate(12);
-
+        $query = Animal::with('species');
+        
+        // Apply species filter
+        if ($request->has('species') && $request->species) {
+            $query->where('species_id', $request->species);
+        }
+        
+        // Apply status filter
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+        
+        // Apply search filter
+        if ($request->has('search') && $request->search) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('breed', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%')
+                  ->orWhere('location', 'like', '%' . $request->search . '%');
+            });
+        }
+        
+        // Apply sorting
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'oldest':
+                    $query->oldest();
+                    break;
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'age_asc':
+                    $query->orderBy('age', 'asc');
+                    break;
+                case 'age_desc':
+                    $query->orderBy('age', 'desc');
+                    break;
+                default:
+                    $query->latest();
+                    break;
+            }
+        } else {
+            $query->latest();
+        }
+        
+        $animals = $query->paginate(12)->withQueryString();
+        $species = Species::all();
+        
+        // Check if this is an admin route
+        if (request()->routeIs('admin.*')) {
+            return view('admin.animals', compact('animals', 'species'));
+        }
+        
         return view('animal.index', compact('animals'));
     }
 
@@ -32,12 +83,18 @@ class AnimalController extends Controller
         }
 
         // Apply age filter
-        if ($request->has('age') && $request->age) {
-            $query->where('age', '<=', $request->age);
+        if ($request->has('max_age') && $request->max_age) {
+            $query->where('age', '<=', $request->max_age);
         }
 
-        // Apply characteristics filter (à adapter selon votre modèle de données)
-        // Ce code est un exemple, vous devrez l'adapter à votre structure
+        // Apply characteristics filter
+        if ($request->has('characteristics') && is_array($request->characteristics)) {
+            // This is a simplified approach, ideally characteristics would be in their own table
+            // with a many-to-many relationship to animals
+            foreach ($request->characteristics as $characteristic) {
+                $query->where('description', 'like', '%' . $characteristic . '%');
+            }
+        }
 
         // Apply search filter
         if ($request->has('search') && $request->search) {
@@ -68,10 +125,11 @@ class AnimalController extends Controller
             $query->latest();
         }
 
-        $animals = $query->paginate(12);
+        $animals = $query->paginate(12)->withQueryString();
         $species = Species::all();
+        $adoptedCount = Animal::where('status', 'adopted')->count();
 
-        return view('animal.adoption', compact('animals', 'species'));
+        return view('animal.pet_adoption_page', compact('animals', 'species', 'adoptedCount'));
     }
 
     /**
@@ -115,7 +173,7 @@ class AnimalController extends Controller
      */
     public function show(Animal $animal)
     {
-        return view('animal.show', compact('animal'));
+        return view('animal.pet_meeting_page', compact('animal'));
     }
 
     /**

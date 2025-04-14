@@ -37,7 +37,7 @@
             <!-- Menu desktop -->
             <div class="hidden md:flex items-center gap-12">
                 <a href="/" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
-                <a href="{{ route('adopter') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
+                <a href="{{ route('animals.adoption') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
                 <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Boutique</a>
                 @auth
                     <a href="{{ route('dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
@@ -61,7 +61,7 @@
     <div class="hidden md:hidden absolute top-20 left-0 right-0 bg-white p-4 shadow-lg z-50" id="mobile-menu">
         <div class="flex flex-col gap-4">
             <a href="/" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
-            <a href="{{ route('adopter') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
+            <a href="{{ route('animals.adoption') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
             <a href="#" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Boutique</a>
             @auth
                 <a href="{{ route('dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
@@ -100,10 +100,10 @@
                 Découvrez nos adorables compagnons qui n'attendent que vous pour commencer une nouvelle vie remplie d'amour.
             </p>
             <div class="flex gap-4">
-                <button onclick="window.location.href='{{ route('animals.index') }}'" class="px-8 py-4 bg-[#FF6B6B] text-white rounded-2xl hover:bg-[#FF8787] transition-transform hover:scale-105">
+                <button onclick="window.location.href='{{ route('animals.adoption') }}'" class="px-8 py-4 bg-[#FF6B6B] text-white rounded-2xl hover:bg-[#FF8787] transition-transform hover:scale-105">
                     Adopter maintenant
                 </button>
-                <button onclick="window.location.href='{{ route('animals.index') }}'" class="px-8 py-4 border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-2xl hover:bg-[#FFE3E3] transition-colors">
+                <button onclick="window.location.href='{{ route('animals.adoption') }}'" class="px-8 py-4 border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-2xl hover:bg-[#FFE3E3] transition-colors">
                     Voir nos animaux
                 </button>
             </div>
@@ -124,7 +124,7 @@
                 <h3 class="text-[#FF6B6B] font-bold mb-2">Nos stars à adopter</h3>
                 <h2 class="text-4xl font-bold text-[#2F2E41]">Trouvez votre compagnon</h2>
             </div>
-            <button class="text-[#FF6B6B] hover:text-[#FF8787]">Voir tous →</button>
+            <a href="{{ route('animals.adoption') }}" class="text-[#FF6B6B] hover:text-[#FF8787]">Voir tous →</a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="featured-pets"></div>
     </div>
