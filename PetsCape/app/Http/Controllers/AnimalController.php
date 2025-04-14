@@ -20,6 +20,61 @@ class AnimalController extends Controller
     }
 
     /**
+     * Display the animal adoption page with filters.
+     */
+    public function adoptionPage(Request $request)
+    {
+        $query = Animal::with('species')->where('status', 'available');
+
+        // Apply species filter
+        if ($request->has('species') && $request->species) {
+            $query->where('species_id', $request->species);
+        }
+
+        // Apply age filter
+        if ($request->has('age') && $request->age) {
+            $query->where('age', '<=', $request->age);
+        }
+
+        // Apply characteristics filter (à adapter selon votre modèle de données)
+        // Ce code est un exemple, vous devrez l'adapter à votre structure
+
+        // Apply search filter
+        if ($request->has('search') && $request->search) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('breed', 'like', '%' . $request->search . '%')
+                    ->orWhere('description', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // Apply sorting
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'oldest':
+                    $query->oldest();
+                    break;
+                case 'age_asc':
+                    $query->orderBy('age', 'asc');
+                    break;
+                case 'age_desc':
+                    $query->orderBy('age', 'desc');
+                    break;
+                default:
+                    $query->latest();
+                    break;
+            }
+        } else {
+            $query->latest();
+        }
+
+        $animals = $query->paginate(12);
+        $species = Species::all();
+
+        return view('animal.adoption', compact('animals', 'species'));
+    }
+
+    /**
      * Show the form for creating a new animal.
      */
     public function create()
@@ -61,6 +116,14 @@ class AnimalController extends Controller
     public function show(Animal $animal)
     {
         return view('animal.show', compact('animal'));
+    }
+
+    /**
+     * Display the animal meeting page.
+     */
+    public function meetingPage(Animal $animal)
+    {
+        return view('animal.meeting', compact('animal'));
     }
 
     /**

@@ -70,3 +70,38 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('species', \App\Http\Controllers\SpeciesController::class);
 });
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
+
+    Route::get('/animals', [\App\Http\Controllers\AnimalController::class, 'index'])->name('animals');
+    Route::get('/appointments', function () {
+        return view('admin.appointments');
+    })->name('appointments');
+    Route::get('/adoptions', function () {
+        return view('admin.adoptions');
+    })->name('adoptions');
+    Route::get('/users', function () {
+        return view('admin.users');
+    })->name('users');
+    Route::get('/reports', function () {
+        return view('admin.reports');
+    })->name('reports');
+
+});
+
+Route::get('/adopter', function () {
+    return view('animal.pet_adoption_page');
+})->name('adopter');
+
+Route::get('/adoption', [AnimalController::class, 'adoptionPage'])->name('animals.adoption');
+Route::get('/adoption/{animal}/meeting', [AnimalController::class, 'meetingPage'])->name('animals.meeting');
+
+// Routes pour les rendez-vous
+Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointments.store')->middleware('auth');
+Route::patch('/appointment/{appointment}/status', [AppointmentController::class, 'updateStatus'])->name('appointments.update-status')->middleware('auth');
+Route::delete('/appointment/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel')->middleware('auth');
+
+
