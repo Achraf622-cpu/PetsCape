@@ -46,7 +46,8 @@
                     <a href="/" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
                     <a href="{{ route('animals.adoption') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
                     @auth
-                        <a href="{{ route('dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
+                        {{-- Direct admin dashboard link for testing --}}
+                        <a href="{{ route('admin.dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
                         <form method="POST" action="{{ route('logout') }}" class="inline">
                             @csrf
                             <button type="submit" class="px-6 py-2 bg-[#FF6B6B] text-white rounded-full hover:bg-[#FF8787] transition-colors">
@@ -69,7 +70,8 @@
                 <a href="/" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
                 <a href="{{ route('animals.adoption') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
                 @auth
-                    <a href="{{ route('dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
+                    {{-- Direct admin dashboard link for testing --}}
+                    <a href="{{ route('admin.dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
                     <form method="POST" action="{{ route('logout') }}" id="mobile-logout-form">
                         @csrf
                         <button type="button"

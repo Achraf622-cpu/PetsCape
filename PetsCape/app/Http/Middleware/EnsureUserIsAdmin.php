@@ -13,7 +13,7 @@ class EnsureUserIsAdmin
     public function handle(Request $request, Closure $next)
     {
         if (!$request->user() || $request->user()->role !== 'admin') {
-            return redirect('/dashboard')->with('error', 'Accès non autorisé.');
+            return redirect(route('dashboard'))->with('error', 'Accès non autorisé. Vous devez être administrateur pour accéder à cette page.');
         }
 
         return $next($request);

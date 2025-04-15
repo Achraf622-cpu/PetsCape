@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Animal;
 use App\Models\Appointment;
 use App\Models\User;
+use App\Models\Report;
+use App\Models\AnimalReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -22,20 +24,19 @@ class AdminController extends Controller
         $ongoingAdoptions = Animal::where('status', 'reserved')->count();
         
         // Count today's appointments
-        $todayAppointments = Appointment::whereDate('date', Carbon::today())->count();
+        $todayAppointments = Appointment::whereDate('date_time', Carbon::today())->count();
         
-        // Count active reports (placeholder - you might need to create a Report model)
-        $activeReports = 0;
+        // Count active reports 
+        $activeReports = AnimalReport::where('is_found', false)->count();
         
         // Get today's appointments for display
         $appointments = Appointment::with(['animal', 'user'])
-            ->whereDate('date', Carbon::today())
-            ->orderBy('date')
-            ->orderBy('time_slot')
+            ->whereDate('date_time', Carbon::today())
+            ->orderBy('date_time')
             ->take(5)
             ->get();
             
-        return view('admin.admin_dashboard_overview', compact(
+        return view('admin.dashboard', compact(
             'totalAnimals', 
             'ongoingAdoptions', 
             'todayAppointments', 
@@ -49,7 +50,11 @@ class AdminController extends Controller
      */
     public function animals(Request $request)
     {
-        return app(AnimalController::class)->index($request);
+        $animals = Animal::with('species')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+            
+        return view('admin.animals', compact('animals'));
     }
     
     /**
@@ -58,8 +63,7 @@ class AdminController extends Controller
     public function appointments()
     {
         $appointments = Appointment::with(['animal', 'user'])
-            ->orderBy('date', 'desc')
-            ->orderBy('time_slot')
+            ->orderBy('date_time', 'desc')
             ->paginate(15);
             
         return view('admin.appointments', compact('appointments'));
@@ -94,7 +98,10 @@ class AdminController extends Controller
      */
     public function reports()
     {
-        // Placeholder for reports - you might need to create a Report model
-        return view('admin.reports');
+        $reports = AnimalReport::with(['species', 'user'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+            
+        return view('admin.reports', compact('reports'));
     }
-} 
+}

@@ -3,7 +3,7 @@
         <!-- Logo -->
         <div class="p-6 border-b">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                <img src="/images/logo.png" alt="PetsCape" class="w-10 h-10">
+                <div class="w-10 h-10 bg-[#FF6B6B] rounded-full"></div>
                 <span class="font-bold text-xl text-[#2F2E41]">PetsCape</span>
             </a>
         </div>
@@ -49,16 +49,17 @@
                 <li>
                     <a href="{{ route('admin.reports') }}"
                        class="flex items-center gap-3 p-3 rounded-xl hover:bg-[#FFE3E3] {{ request()->routeIs('admin.reports') ? 'bg-[#FFE3E3] text-[#FF6B6B]' : 'text-gray-600' }}">
-                        <span class="text-xl">📊</span>
-                        <span>Rapports</span>
+                        <span class="text-xl">🚩</span>
+                        <span>Signalements</span>
                     </a>
                 </li>
             </ul>
         </nav>
 
-        <!-- Profil -->
+        <!-- Profil et Actions -->
         <div class="p-4 border-t">
-            <div class="flex items-center gap-3 p-3">
+            <!-- Profil User -->
+            <div class="flex items-center gap-3 p-3 mb-4">
                 <img src="{{ Auth::user()->avatar ?? '/images/default-avatar.png' }}"
                      alt="Profile"
                      class="w-10 h-10 rounded-full">
@@ -67,6 +68,19 @@
                     <p class="text-sm text-gray-600">Administrateur</p>
                 </div>
             </div>
+            
+            <!-- Actions -->
+            <a href="/" class="flex items-center gap-3 p-3 rounded-xl hover:bg-[#FFE3E3] text-gray-600">
+                <span class="text-xl">🏠</span>
+                <span>Retour au site</span>
+            </a>
+            <form method="POST" action="{{ route('logout') }}" class="mt-3">
+                @csrf
+                <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#FF6B6B] text-white rounded-xl hover:bg-[#FF8787] transition-colors">
+                    <span class="text-xl">🚪</span>
+                    <span>Déconnexion</span>
+                </button>
+            </form>
         </div>
     </div>
 </aside>

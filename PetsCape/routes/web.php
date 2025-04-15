@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -12,6 +13,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnimalReportController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserSettingsController;
+use App\Models\Animal;
+use App\Models\Appointment;
+use Illuminate\Support\Carbon;
 
 Auth::routes(['verify' => true]);
 Auth::routes();
@@ -39,51 +43,51 @@ Route::get('/dashboard', function () {
         ->latest()
         ->take(5)
         ->get();
-        
+
     $lostReports = \App\Models\AnimalReport::where('is_found', false)
         ->with(['species', 'user'])
         ->latest()
         ->take(5)
         ->get();
-        
+
     $foundReports = \App\Models\AnimalReport::where('is_found', true)
         ->with(['species', 'user'])
         ->latest()
         ->take(5)
         ->get();
-        
+
     // Add Reports data
     $myOldReports = \App\Models\Report::where('user_id', auth()->id())
         ->with('species')
         ->latest()
         ->take(5)
         ->get();
-        
+
     // Combine new and old reports for display
     $combinedMyReports = $myReports->merge($myOldReports)
         ->sortByDesc('created_at')
         ->take(5);
-        
+
     $oldLostReports = \App\Models\Report::where('is_found', false)
         ->with(['species', 'user'])
         ->latest()
         ->take(5)
         ->get();
-        
+
     $combinedLostReports = $lostReports->merge($oldLostReports)
         ->sortByDesc('created_at')
         ->take(5);
-        
+
     $oldFoundReports = \App\Models\Report::where('is_found', true)
         ->with(['species', 'user'])
         ->latest()
         ->take(5)
         ->get();
-        
+
     $combinedFoundReports = $foundReports->merge($oldFoundReports)
         ->sortByDesc('created_at')
         ->take(5);
-        
+
     return view('dashboard', [
         'myReports' => $combinedMyReports,
         'lostReports' => $combinedLostReports,
@@ -120,13 +124,30 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('species', \App\Http\Controllers\SpeciesController::class);
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/animals', [AdminController::class, 'animals'])->name('animals');
-    Route::get('/appointments', [AdminController::class, 'appointments'])->name('appointments');
-    Route::get('/adoptions', [AdminController::class, 'adoptions'])->name('adoptions');
-    Route::get('/users', [AdminController::class, 'users'])->name('users');
-    Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
+// Admin routes
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\AdminController::class, 'dashboard'])
+        ->name('dashboard')
+        ->middleware('can:admin');
+    Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])
+        ->name('dashboard')
+        ->middleware('can:admin');
+    Route::get('/animals', [\App\Http\Controllers\AdminController::class, 'animals'])
+        ->name('animals')
+        ->middleware('can:admin');
+    Route::get('/appointments', [\App\Http\Controllers\AdminController::class, 'appointments'])
+        ->name('appointments')
+        ->middleware('can:admin');
+    Route::get('/adoptions', [\App\Http\Controllers\AdminController::class, 'adoptions'])
+        ->name('adoptions')
+        ->middleware('can:admin');
+    Route::get('/users', [\App\Http\Controllers\AdminController::class, 'users'])
+        ->name('users')
+        ->middleware('can:admin');
+    Route::get('/reports', [\App\Http\Controllers\AdminController::class, 'reports'])
+        ->name('reports')
+        ->middleware('can:admin');
+    // Routes d'administration
 });
 
 Route::get('/adoption', [AnimalController::class, 'adoptionPage'])->name('animals.adoption');
@@ -166,15 +187,33 @@ Route::middleware(['auth'])->prefix('old-reports')->name('old-reports.')->group(
 // User settings routes
 Route::middleware(['auth'])->prefix('settings')->name('settings.')->group(function () {
     Route::get('/', [UserSettingsController::class, 'index'])->name('index');
-    
+
     Route::get('/profile', [UserSettingsController::class, 'editProfile'])->name('profile');
     Route::post('/profile', [UserSettingsController::class, 'updateProfile'])->name('profile.update');
-    
+
     Route::get('/password', [UserSettingsController::class, 'editPassword'])->name('password');
     Route::post('/password', [UserSettingsController::class, 'updatePassword'])->name('password.update');
-    
+
     Route::get('/account', [UserSettingsController::class, 'editAccount'])->name('account');
     Route::delete('/account', [UserSettingsController::class, 'deleteAccount'])->name('account.delete');
 });
+
+// Temporary route to make admin user - REMOVE AFTER USE
+Route::get('/make-admin/{email}', function($email) {
+    $user = \App\Models\User::where('email', $email)->first();
+    
+    if (!$user) {
+        return "User with email {$email} not found.";
+    }
+    
+    $user->role = 'admin';
+    $user->save();
+    
+    return "User {$email} is now an admin. You can log in with admin privileges.";
+});
+
+// Temporary direct route to admin dashboard - REMOVE AFTER TESTING
+Route::get('/direct-admin', [\App\Http\Controllers\AdminController::class, 'dashboard'])
+    ->middleware(['auth', 'can:admin']);
 
 
