@@ -84,6 +84,14 @@
                         alt="{{ $animal->name }}"
                         class="w-full h-48 object-cover"
                     >
+                    <!-- Debug info -->
+                    @if(app()->environment('local'))
+                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-1 text-xs overflow-hidden">
+                            Path: {{ $animal->image ?? 'No image' }} <br>
+                            URL: {{ $animal->image ? asset('storage/'.$animal->image) : 'N/A' }}
+                        </div>
+                    @endif
+                    <!-- End debug info -->
                     <span class="absolute top-4 right-4 px-3 py-1
                         @if($animal->status === 'available') bg-green-100 text-green-800
                         @elseif($animal->status === 'reserved') bg-yellow-100 text-yellow-800

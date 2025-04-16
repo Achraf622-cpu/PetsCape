@@ -158,8 +158,17 @@ class AnimalController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('animals', 'public');
-            $validated['image'] = $imagePath;
+            // Create the directory if it doesn't exist
+            $directory = 'public/animals';
+            if (!Storage::exists($directory)) {
+                Storage::makeDirectory($directory);
+            }
+            
+            // Store the image with a unique name
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('animals', $filename, 'public');
+            $validated['image'] = $path;
         }
 
         Animal::create($validated);
@@ -211,12 +220,21 @@ class AnimalController extends Controller
 
         if ($request->hasFile('image')) {
             // Delete old image if it exists
-            if ($animal->image) {
+            if ($animal->image && Storage::disk('public')->exists($animal->image)) {
                 Storage::disk('public')->delete($animal->image);
             }
 
-            $imagePath = $request->file('image')->store('animals', 'public');
-            $validated['image'] = $imagePath;
+            // Create the directory if it doesn't exist
+            $directory = 'public/animals';
+            if (!Storage::exists($directory)) {
+                Storage::makeDirectory($directory);
+            }
+            
+            // Store the image with a unique name
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('animals', $filename, 'public');
+            $validated['image'] = $path;
         }
 
         $animal->update($validated);

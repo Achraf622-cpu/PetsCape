@@ -123,7 +123,15 @@
         <div class="relative">
             <div class="absolute -top-10 -left-10 w-72 h-72 bg-[#FFE3E3] rounded-full filter blur-3xl opacity-70"></div>
             <div class="absolute -bottom-10 -right-10 w-72 h-72 bg-[#FFD1D1] rounded-full filter blur-3xl opacity-70"></div>
-            <img src="path/to/hero-pet.png" alt="Happy pet" class="relative z-10 w-full h-auto rounded-3xl">
+            @if(isset($featuredAnimals[0]))
+                <img src="{{ $featuredAnimals[0]->image ? asset('storage/'.$featuredAnimals[0]->image) : asset('images/default-animal.jpg') }}" 
+                     alt="Pet adoption" 
+                     class="relative z-10 w-full h-[400px] object-cover rounded-3xl">
+            @else
+                <div class="relative z-10 w-full h-[400px] bg-[#FFE3E3] rounded-3xl flex items-center justify-center">
+                    <span class="text-6xl">🐾</span>
+                </div>
+            @endif
         </div>
     </div>
 </div>
@@ -138,88 +146,66 @@
             </div>
             <a href="{{ route('animals.adoption') }}" class="text-[#FF6B6B] hover:text-[#FF8787]">Voir tous →</a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="featured-pets"></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @forelse($featuredAnimals as $animal)
+                <div class="bg-white rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="relative">
+                        <img src="{{ $animal->image ? asset('storage/'.$animal->image) : asset('images/default-animal.jpg') }}" 
+                             alt="{{ $animal->name }}" 
+                             class="w-full h-64 object-cover">
+                        <div class="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-full text-sm">
+                            {{ $animal->species->name ?? 'Non défini' }}
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-[#2F2E41]">{{ $animal->name }}</h3>
+                            <span class="text-[#FF6B6B]">{{ $animal->age }} an(s)</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600 mb-6">
+                            <span>🐾</span> {{ $animal->breed }}
+                        </div>
+                        <a href="{{ route('animals.show', $animal) }}" 
+                           class="block w-full py-3 bg-[#FFE3E3] text-[#FF6B6B] rounded-xl hover:bg-[#FF6B6B] hover:text-white transition-colors text-center">
+                            Rencontrer {{ $animal->name }}
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <div class="col-span-3 text-center py-10">
+                    <div class="text-5xl mb-4">🐾</div>
+                    <h3 class="text-2xl font-bold text-[#2F2E41]">Aucun animal disponible pour le moment</h3>
+                    <p class="text-gray-600 mt-2">Revenez bientôt pour découvrir nos nouveaux pensionnaires</p>
+                </div>
+            @endforelse
+        </div>
     </div>
 </div>
 </body>
 
 <script>
-    const pets = [
-        {
-            name: 'Luna',
-            species: 'Chat',
-            age: '2 ans',
-            personality: 'Joueuse',
-            image: 'path/to/cat-image.jpg'
-        },
-        {
-            name: 'Max',
-            species: 'Chien',
-            age: '3 ans',
-            personality: 'Affectueux',
-            image: 'path/to/dog-image.jpg'
-        },
-        {
-            name: 'Coco',
-            species: 'Perroquet',
-            age: '1 an',
-            personality: 'Bavard',
-            image: 'path/to/parrot-image.jpg'
-        }
-    ];
-
     document.addEventListener('DOMContentLoaded', () => {
-        const featuredPetsContainer = document.getElementById('featured-pets');
-
-        pets.forEach(pet => {
-            const card = `
-            <div class="bg-white rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                <div class="relative">
-                    <img src="${pet.image}" alt="${pet.name}" class="w-full h-64 object-cover">
-                    <div class="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-full text-sm">
-                        ${pet.species}
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-[#2F2E41]">${pet.name}</h3>
-                        <span class="text-[#FF6B6B]">${pet.age}</span>
-                    </div>
-                    <p class="text-gray-600 mb-6">Personnalité: ${pet.personality}</p>
-                    <button class="w-full py-3 bg-[#FFE3E3] text-[#FF6B6B] rounded-xl hover:bg-[#FF6B6B] hover:text-white transition-colors">
-                        Rencontrer ${pet.name}
-                    </button>
-                </div>
-            </div>
-        `;
-            featuredPetsContainer.innerHTML += card;
-        });
-    });
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // Menu mobile toggle existant
+        // Menu mobile toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        
         window.confirmMobileLogout = function() {
             if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
                 document.getElementById('mobile-logout-form').submit();
             }
         };
-
-
-
-        function confirmLogout() {
-        if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-            document.getElementById('logout-form').submit();
-        }
-    }
+        
+        window.confirmLogout = function() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                document.getElementById('logout-form').submit();
+            }
+        };
     });
-
-
 </script>
 </html>

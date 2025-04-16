@@ -13,6 +13,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnimalReportController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserSettingsController;
+use App\Http\Controllers\HomeController;
 use App\Models\Animal;
 use App\Models\Appointment;
 use Illuminate\Support\Carbon;
@@ -20,9 +21,7 @@ use Illuminate\Support\Carbon;
 Auth::routes(['verify' => true]);
 Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
