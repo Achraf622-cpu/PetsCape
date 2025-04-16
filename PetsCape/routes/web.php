@@ -146,6 +146,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/reports', [\App\Http\Controllers\AdminController::class, 'reports'])
         ->name('reports')
         ->middleware('can:admin');
+    Route::get('/donations', [\App\Http\Controllers\AdminController::class, 'donations'])
+        ->name('donations')
+        ->middleware('can:admin');
     // Routes d'administration
 });
 
@@ -195,6 +198,14 @@ Route::middleware(['auth'])->prefix('settings')->name('settings.')->group(functi
 
     Route::get('/account', [UserSettingsController::class, 'editAccount'])->name('account');
     Route::delete('/account', [UserSettingsController::class, 'deleteAccount'])->name('account.delete');
+});
+
+// Donation routes
+Route::middleware(['auth'])->prefix('donations')->name('donation.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\DonationController::class, 'showDonationForm'])->name('form');
+    Route::post('/process', [\App\Http\Controllers\DonationController::class, 'createCheckoutSession'])->name('process');
+    Route::get('/success', [\App\Http\Controllers\DonationController::class, 'success'])->name('success');
+    Route::get('/cancel', [\App\Http\Controllers\DonationController::class, 'cancel'])->name('cancel');
 });
 
 // Temporary route to make admin user - REMOVE AFTER USE

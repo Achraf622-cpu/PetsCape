@@ -46,6 +46,7 @@
                     <a href="/" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
                     <a href="{{ route('animals.adoption') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
                     @auth
+                        <a href="{{ route('donation.form') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Faire un don</a>
                         {{-- Direct admin dashboard link for testing --}}
                         <a href="{{ route('admin.dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
                         <form method="POST" action="{{ route('logout') }}" class="inline">
@@ -70,6 +71,7 @@
                 <a href="/" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Accueil</a>
                 <a href="{{ route('animals.adoption') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Adopter</a>
                 @auth
+                    <a href="{{ route('donation.form') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Faire un don</a>
                     {{-- Direct admin dashboard link for testing --}}
                     <a href="{{ route('admin.dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
                     <form method="POST" action="{{ route('logout') }}" id="mobile-logout-form">

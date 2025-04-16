@@ -53,6 +53,13 @@
                         <span>Signalements</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.donations') }}"
+                       class="flex items-center gap-3 p-3 rounded-xl hover:bg-[#FFE3E3] {{ request()->routeIs('admin.donations') ? 'bg-[#FFE3E3] text-[#FF6B6B]' : 'text-gray-600' }}">
+                        <span class="text-xl">💰</span>
+                        <span>Dons</span>
+                    </a>
+                </li>
             </ul>
         </nav>
 
