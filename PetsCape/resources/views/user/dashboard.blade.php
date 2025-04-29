@@ -315,15 +315,15 @@
                                         </td>
                                         <td class="py-3">
                                             @if ($report instanceof \App\Models\AnimalReport)
-                                                <span class="px-3 py-1 rounded-full text-sm 
+                                                <span class="px-3 py-1 rounded-full text-sm
                                                     {{ $report->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : '' }}
                                                     {{ $report->status === 'resolved' ? 'bg-green-100 text-green-700' : '' }}
                                                     {{ $report->status === 'cancelled' ? 'bg-gray-100 text-gray-700' : '' }}">
-                                                    {{ $report->status === 'pending' ? 'En attente' : 
+                                                    {{ $report->status === 'pending' ? 'En attente' :
                                                     ($report->status === 'resolved' ? 'Résolu' : 'Annulé') }}
                                                 </span>
                                             @else
-                                                <span class="px-3 py-1 rounded-full text-sm 
+                                                <span class="px-3 py-1 rounded-full text-sm
                                                     {{ !$report->is_resolved ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700' }}">
                                                     {{ $report->is_resolved ? 'Résolu' : 'En attente' }}
                                                 </span>
