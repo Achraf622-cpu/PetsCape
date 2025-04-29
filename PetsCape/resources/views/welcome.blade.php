@@ -165,7 +165,7 @@
                         <div class="flex items-center gap-2 text-sm text-gray-600 mb-6">
                             <span>🐾</span> {{ $animal->breed }}
                         </div>
-                        <a href="{{ route('animals.show', $animal) }}" 
+                        <a href="{{ route('animals.show', $animal) }}"
                            class="block w-full py-3 bg-[#FFE3E3] text-[#FF6B6B] rounded-xl hover:bg-[#FF6B6B] hover:text-white transition-colors text-center">
                             Rencontrer {{ $animal->name }}
                         </a>
