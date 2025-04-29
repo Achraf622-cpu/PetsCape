@@ -176,17 +176,19 @@
         <h2 class="text-2xl font-bold text-[#2F2E41] mb-6">Avez-vous des informations?</h2>
         
         <div class="mb-8">
-            @forelse($report->comments as $comment)
-                <div class="border-b last:border-b-0 py-4">
-                    <div class="flex justify-between items-start mb-2">
-                        <div class="font-bold">{{ $comment->user->name }}</div>
-                        <div class="text-sm text-gray-500">{{ $comment->created_at->format('d/m/Y H:i') }}</div>
+            @if(isset($report->comments) && count($report->comments) > 0)
+                @foreach($report->comments as $comment)
+                    <div class="border-b last:border-b-0 py-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="font-bold">{{ $comment->user->name }}</div>
+                            <div class="text-sm text-gray-500">{{ $comment->created_at->format('d/m/Y H:i') }}</div>
+                        </div>
+                        <p class="text-gray-600">{{ $comment->content }}</p>
                     </div>
-                    <p class="text-gray-600">{{ $comment->content }}</p>
-                </div>
-            @empty
+                @endforeach
+            @else
                 <p class="text-gray-500 italic">Aucun commentaire pour le moment.</p>
-            @endforelse
+            @endif
         </div>
         
         <form action="{{ route('reports.comments.store', $report) }}" method="POST">
