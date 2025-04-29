@@ -148,12 +148,13 @@
                         </a>
                         
                         @if($report->status === 'pending')
-                            <form action="{{ route('reports.update-status', ['report' => $report->id, 'status' => 'resolved']) }}" method="POST" class="inline">
+                            <form action="{{ route('reports.change-status', $report) }}" method="POST" class="inline">
                                 @csrf
                                 @method('PATCH')
                                 <button type="submit" class="w-full px-6 py-3 border-2 border-green-500 text-green-500 rounded-xl hover:bg-green-50 text-center">
                                     Marquer comme résolu
                                 </button>
+                                <input type="hidden" name="status" value="resolved">
                             </form>
                         @endif
                         
