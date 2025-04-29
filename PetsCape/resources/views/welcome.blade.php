@@ -150,8 +150,8 @@
             @forelse($featuredAnimals as $animal)
                 <div class="bg-white rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                     <div class="relative">
-                        <img src="{{ $animal->image ? asset('storage/'.$animal->image) : asset('images/default-animal.jpg') }}" 
-                             alt="{{ $animal->name }}" 
+                        <img src="{{ $animal->image ? asset('storage/'.$animal->image) : asset('images/default-animal.jpg') }}"
+                             alt="{{ $animal->name }}"
                              class="w-full h-64 object-cover">
                         <div class="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-full text-sm">
                             {{ $animal->species->name ?? 'Non défini' }}
