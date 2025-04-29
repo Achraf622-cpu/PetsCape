@@ -179,6 +179,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/reports/{report}', [AnimalReportController::class, 'destroy'])->name('reports.destroy');
     Route::patch('/reports/{report}/status', [AnimalReportController::class, 'changeStatus'])->name('reports.change-status');
     Route::get('/my-reports', [AnimalReportController::class, 'myReports'])->name('reports.my');
+    
+    // Route for report comments
+    Route::post('/reports/{report}/comments', [ReportCommentController::class, 'store'])->name('reports.comments.store');
 });
 
 // Routes pour les anciens signalements
