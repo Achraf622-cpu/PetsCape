@@ -182,6 +182,7 @@ class AnimalController extends Controller
      */
     public function show(Animal $animal)
     {
+        $animal->load('appointments', 'species');
         return view('animal.pet_meeting_page', compact('animal'));
     }
 
