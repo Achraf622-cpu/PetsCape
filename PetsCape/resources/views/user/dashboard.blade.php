@@ -67,8 +67,8 @@
     <div class="w-64 flex-shrink-0">
         <div class="bg-white rounded-2xl shadow-sm p-5 sticky top-8">
             <!-- User Profile Summary -->
-            <div class="flex flex-col items-center mb-6 pb-6 border-b border-gray-100">
-                <div class="w-20 h-20 bg-[#FFE3E3] rounded-full mb-3 flex items-center justify-center text-2xl font-bold text-[#FF6B6B]">
+            <div class="flex flex-col items-center mb-5 pb-5 border-b border-gray-100">
+                <div class="w-16 h-16 bg-[#FFE3E3] rounded-full mb-3 flex items-center justify-center text-xl font-bold text-[#FF6B6B]">
                     {{ substr(auth()->user()->name, 0, 1) }}
                 </div>
                 <h2 class="font-bold text-[#2F2E41]">{{ auth()->user()->name }}</h2>
