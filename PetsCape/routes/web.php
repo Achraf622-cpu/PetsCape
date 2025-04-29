@@ -17,6 +17,7 @@ use App\Http\Controllers\HomeController;
 use App\Models\Animal;
 use App\Models\Appointment;
 use Illuminate\Support\Carbon;
+use App\Http\Controllers\ReportCommentController;
 
 Auth::routes(['verify' => true]);
 Auth::routes();
