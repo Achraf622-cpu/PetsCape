@@ -193,7 +193,7 @@
                             </svg>
                         </div>
                         <h3 class="font-bold text-[#2F2E41]">Rendez-vous</h3>
-                        <p class="text-sm text-gray-700">0</p>
+                        <p class="text-sm text-gray-700">{{ isset($userAppointments) ? count($userAppointments) : 0 }}</p>
                     </div>
                 </div>
             </div>
@@ -358,7 +358,33 @@
                 <h2 class="text-xl font-bold text-[#2F2E41] mb-6">Mes adoptions</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <p class="text-gray-600 text-center py-4 col-span-3">Vous n'avez pas encore d'adoptions.</p>
+                    @if(isset($userAppointments) && count($userAppointments) > 0)
+                        @foreach($userAppointments as $appointment)
+                            <div class="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+                                <img src="{{ $appointment->animal->image ? asset('storage/'.$appointment->animal->image) : asset('images/default-pet.jpg') }}" alt="{{ $appointment->animal->name }}" class="w-full h-48 object-cover">
+                                <div class="p-4">
+                                    <h3 class="font-bold text-[#2F2E41]">{{ $appointment->animal->name }}</h3>
+                                    <p class="text-sm text-gray-600 mb-2">{{ $appointment->animal->species->name ?? 'Animal' }}</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs px-2 py-1 rounded-full
+                                            @if($appointment->status === 'confirmed') bg-green-100 text-green-800
+                                            @elseif($appointment->status === 'pending') bg-yellow-100 text-yellow-800
+                                            @elseif($appointment->status === 'cancelled') bg-red-100 text-red-800
+                                            @else bg-blue-100 text-blue-800 @endif">
+                                            {{ $appointment->status === 'pending' ? 'En attente' : 
+                                               ($appointment->status === 'confirmed' ? 'Confirmé' : 
+                                               ($appointment->status === 'cancelled' ? 'Annulé' : 'Terminé')) }}
+                                        </span>
+                                        <a href="{{ route('animals.show', $appointment->animal) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787]">
+                                            Voir l'animal
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="text-gray-600 text-center py-4 col-span-3">Vous n'avez pas encore d'adoptions.</p>
+                    @endif
                 </div>
             </div>
         </div>
