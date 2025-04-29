@@ -106,7 +106,7 @@
 
                     <p class="text-center text-gray-600">
                         Pas encore membre?
-                        <a href="#" class="text-[#FF6B6B] hover:text-[#FF8787] font-semibold">
+                        <a href="{{ route('register') }}" class="text-[#FF6B6B] hover:text-[#FF8787] font-semibold">
                             Créer un compte
                         </a>
                     </p>
