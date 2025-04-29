@@ -84,10 +84,12 @@
             <!-- Sidebar Navigation -->
             <div class="space-y-2 mt-6">
                 <a href="#" class="sidebar-link active" data-section="dashboard">
-                    <svg class="sidebar-icon text-[#36B9CC]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M2 13h6v8H2v-8zm7-10h6v18H9V3zm7 5h6v13h-6V8z" />
-                    </svg>
-                    Tableau de bord
+                    <div class="icon-container">
+                        <svg class="w-5 h-5 text-[#36B9CC]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2 13h6v8H2v-8zm7-10h6v18H9V3zm7 5h6v13h-6V8z" />
+                        </svg>
+                    </div>
+                    <span>Tableau de bord</span>
                 </a>
                 <a href="#" class="sidebar-link" data-section="signalements">
                     <svg class="sidebar-icon text-[#E74A3B]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
