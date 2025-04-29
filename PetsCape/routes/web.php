@@ -89,11 +89,16 @@ Route::get('/user/dashboard', function () {
         ->sortByDesc('created_at')
         ->take(5);
 
-    return view('dashboard', [
+    return view('user.dashboard', [
         'myReports' => $combinedMyReports,
         'lostReports' => $combinedLostReports,
         'foundReports' => $combinedFoundReports
     ]);
+})->middleware(['auth', 'verified'])->name('user.dashboard');
+
+// Redirect old dashboard route to user.dashboard
+Route::get('/dashboard', function () {
+    return redirect()->route('user.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Routes de vérification d'email
