@@ -124,8 +124,8 @@
             <div class="absolute -top-10 -left-10 w-72 h-72 bg-[#FFE3E3] rounded-full filter blur-3xl opacity-70"></div>
             <div class="absolute -bottom-10 -right-10 w-72 h-72 bg-[#FFD1D1] rounded-full filter blur-3xl opacity-70"></div>
             @if(isset($featuredAnimals[0]))
-                <img src="{{ $featuredAnimals[0]->image ? asset('storage/'.$featuredAnimals[0]->image) : asset('images/default-animal.jpg') }}" 
-                     alt="Pet adoption" 
+                <img src="{{ $featuredAnimals[0]->image ? asset('storage/'.$featuredAnimals[0]->image) : asset('images/default-animal.jpg') }}"
+                     alt="Pet adoption"
                      class="relative z-10 w-full h-[400px] object-cover rounded-3xl">
             @else
                 <div class="relative z-10 w-full h-[400px] bg-[#FFE3E3] rounded-3xl flex items-center justify-center">
