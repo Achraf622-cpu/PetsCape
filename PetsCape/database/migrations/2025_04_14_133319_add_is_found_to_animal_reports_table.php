@@ -15,8 +15,11 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::table('animal_reports', function (Blueprint $table) {
-            $table->dropColumn('is_found');
-        });
+        // Check if the table exists before attempting to modify it
+        if (Schema::hasTable('animal_reports')) {
+            Schema::table('animal_reports', function (Blueprint $table) {
+                $table->dropColumn('is_found');
+            });
+        }
     }
 };
