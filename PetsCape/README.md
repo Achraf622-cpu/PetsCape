@@ -1,66 +1,91 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🐾 PetsCape - Plateforme d'Adoption d'Animaux et Soutien aux Refuges
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 Présentation du Projet
+PetsCape est une plateforme web dédiée à l'adoption d'animaux de compagnie et au soutien des refuges. Le site permet aux utilisateurs de découvrir des animaux disponibles à l'adoption, de signaler des animaux perdus ou trouvés, et de soutenir la cause animale par des dons.
 
-## About Laravel
+## ❓ Problématique
+De nombreuses personnes souhaitent adopter un animal mais rencontrent des difficultés à trouver des refuges ou des animaux adaptés à leur mode de vie. Les refuges manquent souvent de visibilité, et les propriétaires d'animaux perdus n'ont pas de plateforme centralisée pour signaler leur disparition. Cette plateforme répond à ces besoins en centralisant ces services.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🎯 Objectifs du Projet
+- Permettre aux utilisateurs de découvrir et d'adopter des animaux en ligne
+- Offrir un système de rendez-vous pour rencontrer les animaux avant adoption
+- Faciliter le signalement d'animaux perdus et trouvés
+- Soutenir les refuges par un système de dons sécurisé
+- Fournir une interface d'administration complète pour la gestion du site
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠 Technologies Utilisées
+- **Backend :** PHP (Framework Laravel)
+- **Base de données :** MySQL
+- **Frontend :** JavaScript, HTML (Blade), Tailwind CSS
+- **Paiement :** Stripe API (pour les dons)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🚀 Fonctionnalités
 
-## Learning Laravel
+### 🐶 Adoption d'Animaux
+- Catalogue d'animaux disponibles à l'adoption avec fiches détaillées (photos, âge, race, description)
+- Système de filtres avancés (espèce, âge, caractéristiques)
+- Prise de rendez-vous pour rencontrer les animaux
+- Suivi des demandes d'adoption
+- Interface d'administration pour la gestion des animaux
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🔍 Signalement d'Animaux Perdus/Trouvés
+- Formulaire de signalement d'animaux perdus ou trouvés
+- Système de recherche et filtres par localisation, espèce et caractéristiques
+- Système de commentaires pour faciliter la communication
+- Gestion du statut des signalements (en cours, résolu, annulé)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 💰 Système de Dons
+- Formulaire de don avec intégration Stripe
+- Différents montants proposés
+- Suivi des dons effectués
+- Reçu automatique par email
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 👤 Gestion des Utilisateurs
+- Inscription et authentification des utilisateurs
+- Vérification d'email
+- Profil utilisateur personnalisable
+- Tableau de bord utilisateur pour suivre les rendez-vous et les signalements
 
-## Laravel Sponsors
+### 🔧 Administration
+- Tableau de bord administrateur complet
+- Gestion des animaux (ajout, modification, suppression)
+- Gestion des rendez-vous et des demandes d'adoption
+- Suivi des dons
+- Gestion des utilisateurs et des signalements
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🔐 Architecture et Sécurité
+- Architecture MVC avec Laravel
+- Authentification sécurisée avec Laravel Sanctum
+- Validation des données côté serveur
+- Protection contre les attaques CSRF et XSS
+- Gestion des rôles et des permissions (utilisateur standard, administrateur)
 
-### Premium Partners
+## 🎨 Design et Expérience Utilisateur
+- Interface intuitive et responsive
+- Design moderne avec Tailwind CSS
+- Navigation fluide
+- Expérience utilisateur optimisée pour mobile et desktop
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## 🔄 Évolutions Futures
+- Module de messagerie intégrée entre adoptants et refuges
+- Système de notifications en temps réel
+- Géolocalisation des animaux perdus/trouvés
+- Intégration de cartes interactives
+- Ajout d'un blog et de ressources éducatives sur les soins aux animaux
 
-## Contributing
+## 📋 Installation et Déploiement
+1. Cloner le dépôt
+2. Installer les dépendances avec `composer install`
+3. Configurer le fichier `.env` avec les paramètres de base de données et Stripe
+4. Exécuter les migrations avec `php artisan migrate --seed`
+5. Lancer le serveur avec `php artisan serve`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🤝 Contribution
+Les contributions sont les bienvenues ! N'hésitez pas à soumettre des pull requests ou à signaler des bugs.
 
-## Code of Conduct
+## 📜 Licence
+Ce projet est sous licence open-source.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+🐾 **Contact :** Pour toute question, contactez hanzazachraf581@gmail.com
