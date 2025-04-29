@@ -65,7 +65,7 @@
 <div class="flex max-w-7xl mx-auto px-6 py-8 gap-8">
     <!-- Sidebar -->
     <div class="w-64 flex-shrink-0">
-        <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-8">
+        <div class="bg-white rounded-2xl shadow-sm p-5 sticky top-8">
             <!-- User Profile Summary -->
             <div class="flex flex-col items-center mb-6 pb-6 border-b border-gray-100">
                 <div class="w-20 h-20 bg-[#FFE3E3] rounded-full mb-3 flex items-center justify-center text-2xl font-bold text-[#FF6B6B]">
