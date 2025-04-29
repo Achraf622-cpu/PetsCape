@@ -37,7 +37,8 @@ Route::post('/logout', [LogoutController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-Route::get('/dashboard', function () {
+// Route for user dashboard combining styles from user_dashboard and functionality from dashboard
+Route::get('/user/dashboard', function () {
     $myReports = \App\Models\AnimalReport::where('user_id', auth()->id())
         ->with('species')
         ->latest()
