@@ -43,9 +43,9 @@
                     @if(auth()->user()->role === 'admin')
                         <a href="{{ route('admin.dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Dashboard</a>
                         <a href="/direct-admin" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Direct Admin</a>
-                        <a href="{{ route('dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
+                        <a href="{{ route('user.dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
                     @else
-                        <a href="{{ route('dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
+                        <a href="{{ route('user.dashboard') }}" class="text-[#2F2E41] hover:text-[#FF6B6B] transition-colors">Mon Profil</a>
                     @endif
                     <form method="POST" action="{{ route('logout') }}" class="inline" id="logout-form">
                         @csrf
