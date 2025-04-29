@@ -71,10 +71,10 @@
                 <div class="w-16 h-16 bg-[#FFE3E3] rounded-full mb-3 flex items-center justify-center text-xl font-bold text-[#FF6B6B]">
                     {{ substr(auth()->user()->name, 0, 1) }}
                 </div>
-                <h2 class="font-bold text-[#2F2E41]">{{ auth()->user()->name }}</h2>
-                <p class="text-sm text-gray-500">{{ auth()->user()->email }}</p>
-                <a href="{{ route('settings.index') }}" class="mt-3 text-sm text-[#FF6B6B] hover:text-[#FF8787] flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <h2 class="font-bold text-[#2F2E41] text-sm">{{ auth()->user()->name }}</h2>
+                <p class="text-xs text-gray-500 mb-2">{{ auth()->user()->email }}</p>
+                <a href="{{ route('settings.index') }}" class="text-xs text-[#FF6B6B] hover:text-[#FF8787] flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
                     Modifier mon profil
