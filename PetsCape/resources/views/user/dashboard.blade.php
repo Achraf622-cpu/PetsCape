@@ -405,7 +405,37 @@
             <div class="bg-white p-6 rounded-2xl shadow-sm mb-8">
                 <h2 class="text-xl font-bold text-[#2F2E41] mb-6">Mes rendez-vous</h2>
                 <div class="space-y-4">
-                    <p class="text-gray-600 text-center py-4">Vous n'avez pas de rendez-vous à venir.</p>
+                    @if(isset($userAppointments) && count($userAppointments) > 0)
+                        @foreach($userAppointments as $appointment)
+                            <div class="flex items-start gap-4 p-4 border border-gray-100 rounded-xl hover:bg-[#FFF5F5] transition-colors">
+                                <img src="{{ $appointment->animal->image ? asset('storage/'.$appointment->animal->image) : asset('images/default-pet.jpg') }}" alt="Animal" class="w-16 h-16 object-cover rounded-xl">
+                                <div class="flex-1">
+                                    <div class="flex justify-between">
+                                        <h3 class="font-bold text-[#2F2E41]">{{ $appointment->animal->name }}</h3>
+                                        <span class="px-3 py-1 text-sm rounded-full
+                                            @if($appointment->status === 'confirmed') bg-green-100 text-green-800
+                                            @elseif($appointment->status === 'pending') bg-yellow-100 text-yellow-800
+                                            @elseif($appointment->status === 'cancelled') bg-red-100 text-red-800
+                                            @else bg-blue-100 text-blue-800 @endif">
+                                            {{ $appointment->status === 'pending' ? 'En attente' : 
+                                               ($appointment->status === 'confirmed' ? 'Confirmé' : 
+                                               ($appointment->status === 'cancelled' ? 'Annulé' : 'Terminé')) }}
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mt-1">{{ \Carbon\Carbon::parse($appointment->date_time)->format('d/m/Y à H:i') }}</p>
+                                    @if($appointment->status === 'pending' || $appointment->status === 'confirmed')
+                                        <form method="POST" action="{{ route('appointments.cancel', $appointment) }}" class="mt-2">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-sm text-red-600 hover:text-red-800">Annuler ce rendez-vous</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="text-gray-600 text-center py-4">Vous n'avez pas de rendez-vous à venir.</p>
+                    @endif
                 </div>
             </div>
         </div>
