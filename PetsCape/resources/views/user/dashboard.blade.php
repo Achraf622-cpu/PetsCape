@@ -115,17 +115,34 @@
                     </div>
                     <span>Mes favoris</span>
                 </a>
+                
                 <a href="#" class="sidebar-link" data-section="rendez-vous">
-                    <svg class="sidebar-icon text-[#4E73DF]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7,12H9V14H7V12M21,6V20A2,2 0 0,1 19,22H5C3.89,22 3,21.1 3,20V6A2,2 0 0,1 5,4H6V2H8V4H16V2H18V4H19A2,2 0 0,1 21,6M5,8H19V6H5V8M19,20V10H5V20H19M15,14V12H17V14H15M11,14V12H13V14H11M7,16H9V18H7V16M15,18V16H17V18H15M11,18V16H13V18H11Z" />
-                    </svg>
-                    Mes rendez-vous
+                    <div class="icon-container">
+                        <svg class="w-5 h-5 text-[#4E73DF]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7,12H9V14H7V12M21,6V20A2,2 0 0,1 19,22H5C3.89,22 3,21.1 3,20V6A2,2 0 0,1 5,4H6V2H8V4H16V2H18V4H19A2,2 0 0,1 21,6M5,8H19V6H5V8M19,20V10H5V20H19M15,14V12H17V14H15M11,14V12H13V14H11M7,16H9V18H7V16M15,18V16H17V18H15M11,18V16H13V18H11Z" />
+                        </svg>
+                    </div>
+                    <span>Mes rendez-vous</span>
                 </a>
+                
                 <a href="#" class="sidebar-link" data-section="recents">
-                    <svg class="sidebar-icon text-[#6610F2]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z" />
+                    <div class="icon-container">
+                        <svg class="w-5 h-5 text-[#6610F2]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z" />
+                        </svg>
+                    </div>
+                    <span>Animaux récents</span>
+                </a>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="mt-6 pt-5 border-t border-gray-100">
+                <h3 class="text-xs uppercase text-gray-500 font-semibold mb-3">Actions rapides</h3>
+                <a href="{{ route('reports.create') }}" class="w-full flex items-center justify-center gap-2 bg-[#FF6B6B] hover:bg-[#FF8787] text-white py-2 rounded-lg text-sm transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-                    Animaux récents
+                    Signaler un animal
                 </a>
             </div>
         </div>
