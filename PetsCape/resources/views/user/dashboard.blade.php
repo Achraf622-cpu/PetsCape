@@ -92,10 +92,12 @@
                     <span>Tableau de bord</span>
                 </a>
                 <a href="#" class="sidebar-link" data-section="signalements">
-                    <svg class="sidebar-icon text-[#E74A3B]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M11.5,1L2,6V8H23V6M11.5,9.5L6,12.5V22H17V12.5L11.5,9.5Z" />
-                    </svg>
-                    Mes signalements
+                    <div class="icon-container">
+                        <svg class="w-5 h-5 text-[#E74A3B]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.5,1L2,6V8H23V6M11.5,9.5L6,12.5V22H17V12.5L11.5,9.5Z" />
+                        </svg>
+                    </div>
+                    <span>Mes signalements</span>
                 </a>
                 <a href="#" class="sidebar-link" data-section="adoptions">
                     <svg class="sidebar-icon text-[#F6C23E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
