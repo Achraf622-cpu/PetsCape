@@ -83,6 +83,45 @@
                             <p class="text-gray-600">Remplissez le formulaire ci-dessous pour organiser une rencontre</p>
                         </div>
 
+                        @auth
+                            @php
+                                $userAppointments = $animal->appointments()->where('user_id', auth()->id())->get();
+                            @endphp
+                            
+                            @if($userAppointments->count() > 0)
+                                <div class="mb-6 p-4 bg-[#FFF5F5] rounded-xl">
+                                    <h3 class="font-bold text-[#2F2E41] mb-2">Vos rendez-vous avec {{ $animal->name }}</h3>
+                                    <div class="space-y-3">
+                                        @foreach($userAppointments as $appointment)
+                                            <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                                                <div>
+                                                    <p class="font-medium text-[#2F2E41]">{{ \Carbon\Carbon::parse($appointment->date_time)->format('d/m/Y à H:i') }}</p>
+                                                    <span class="text-xs px-2 py-1 rounded-full 
+                                                        @if($appointment->status === 'confirmed') bg-green-100 text-green-800
+                                                        @elseif($appointment->status === 'pending') bg-yellow-100 text-yellow-800
+                                                        @elseif($appointment->status === 'cancelled') bg-red-100 text-red-800
+                                                        @else bg-blue-100 text-blue-800 @endif">
+                                                        {{ $appointment->status === 'pending' ? 'En attente' : 
+                                                           ($appointment->status === 'confirmed' ? 'Confirmé' : 
+                                                           ($appointment->status === 'cancelled' ? 'Annulé' : 'Terminé')) }}
+                                                    </span>
+                                                </div>
+                                                @if($appointment->status === 'pending' || $appointment->status === 'confirmed')
+                                                    <form method="POST" action="{{ route('appointments.cancel', $appointment) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="text-sm text-red-600 hover:text-red-800">
+                                                            Annuler
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        @endauth
+
                         <form class="space-y-6" action="{{ route('appointments.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="animal_id" value="{{ $animal->id }}">
