@@ -17,22 +17,22 @@
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
         }
         .sidebar-link {
-            @apply flex items-center gap-2 px-3 py-2.5 text-[#2F2E41] rounded-lg transition-colors;
+            @apply flex items-center py-3 px-4 border-b border-gray-200 text-[#2F2E41] transition-colors;
         }
         .sidebar-link:hover {
-            @apply bg-[#FFE3E3];
+            @apply bg-[#FFF5F5];
         }
         .sidebar-link.active {
             @apply bg-[#FFE3E3] text-[#FF6B6B] font-semibold;
         }
-        .sidebar-icon {
-            @apply w-4 h-4;
+        .icon-container {
+            @apply mr-3 flex-shrink-0;
         }
         .sidebar-section {
             @apply mb-2 pb-2 border-b border-gray-100;
         }
         .sidebar-section-title {
-            @apply text-xs uppercase text-gray-500 font-semibold px-3 py-2;
+            @apply text-xs uppercase text-gray-500 font-semibold px-4 py-2;
         }
     </style>
 </head>
