@@ -88,11 +88,18 @@ Route::get('/user/dashboard', function () {
     $combinedFoundReports = $foundReports->merge($oldFoundReports)
         ->sortByDesc('created_at')
         ->take(5);
+    
+    // Get user appointments
+    $userAppointments = \App\Models\Appointment::where('user_id', auth()->id())
+        ->with('animal')
+        ->orderBy('date_time')
+        ->get();
 
     return view('user.dashboard', [
         'myReports' => $combinedMyReports,
         'lostReports' => $combinedLostReports,
-        'foundReports' => $combinedFoundReports
+        'foundReports' => $combinedFoundReports,
+        'userAppointments' => $userAppointments
     ]);
 })->middleware(['auth', 'verified'])->name('user.dashboard');
 
