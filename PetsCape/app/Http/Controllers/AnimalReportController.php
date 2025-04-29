@@ -69,7 +69,9 @@ class AnimalReportController extends Controller
             'gender' => 'nullable|string|max:255',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
-            'contact_info' => 'required|string|max:255',
+            'contact_name' => 'required|string|max:255',
+            'contact_email' => 'required|email|max:255',
+            'contact_phone' => 'required|string|max:255',
             'is_found' => 'required|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
