@@ -80,9 +80,9 @@
                     Modifier profil
                 </a>
             </div>
-            
+
             <!-- Sidebar Navigation -->
-            <div class="space-y-2 mt-6">
+            <div class="mt-2">
                 <a href="#" class="sidebar-link active" data-section="dashboard">
                     <div class="icon-container">
                         <svg class="w-5 h-5 text-[#36B9CC]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -91,6 +91,7 @@
                     </div>
                     <span>Tableau de bord</span>
                 </a>
+                
                 <a href="#" class="sidebar-link" data-section="signalements">
                     <div class="icon-container">
                         <svg class="w-5 h-5 text-[#E74A3B]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -99,6 +100,7 @@
                     </div>
                     <span>Mes signalements</span>
                 </a>
+                
                 <a href="#" class="sidebar-link" data-section="adoptions">
                     <div class="icon-container">
                         <svg class="w-5 h-5 text-[#F6C23E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -107,6 +109,7 @@
                     </div>
                     <span>Mes adoptions</span>
                 </a>
+                
                 <a href="#" class="sidebar-link" data-section="favoris">
                     <div class="icon-container">
                         <svg class="w-5 h-5 text-[#E63946]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -161,7 +164,7 @@
             <div class="bg-white p-6 rounded-2xl shadow-sm">
                 <h1 class="text-2xl font-bold text-[#2F2E41]">Bienvenue, {{ auth()->user()->name }} !</h1>
                 <p class="text-gray-600 mt-2">Voici votre tableau de bord personnel</p>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                     <div class="bg-[#FFE3E3] rounded-xl p-4 flex flex-col items-center justify-center text-center">
                         <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-3">
@@ -172,7 +175,7 @@
                         <h3 class="font-bold text-[#2F2E41]">Signalements</h3>
                         <p class="text-sm text-gray-700">{{ count($myReports) }}</p>
                     </div>
-                    
+
                     <div class="bg-[#FFE3E3] rounded-xl p-4 flex flex-col items-center justify-center text-center">
                         <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-3">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF6B6B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -182,7 +185,7 @@
                         <h3 class="font-bold text-[#2F2E41]">Favoris</h3>
                         <p class="text-sm text-gray-700">0</p>
                     </div>
-                    
+
                     <div class="bg-[#FFE3E3] rounded-xl p-4 flex flex-col items-center justify-center text-center">
                         <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-3">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF6B6B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -375,7 +378,6 @@
         <div id="rendez-vous-section" class="hidden">
             <div class="bg-white p-6 rounded-2xl shadow-sm mb-8">
                 <h2 class="text-xl font-bold text-[#2F2E41] mb-6">Mes rendez-vous</h2>
-
                 <div class="space-y-4">
                     <p class="text-gray-600 text-center py-4">Vous n'avez pas de rendez-vous à venir.</p>
                 </div>
@@ -470,24 +472,24 @@
             'rendez-vous': document.getElementById('rendez-vous-section'),
             'recents': document.getElementById('recents-section')
         };
-        
+
         const links = document.querySelectorAll('.sidebar-link');
-        
+
         links.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                
+
                 // Hide all sections
                 Object.values(sections).forEach(section => {
                     section.classList.add('hidden');
                 });
-                
+
                 // Remove active class from all links
                 links.forEach(l => l.classList.remove('active'));
-                
+
                 // Add active class to clicked link
                 this.classList.add('active');
-                
+
                 // Show selected section
                 const sectionName = this.getAttribute('data-section');
                 sections[sectionName].classList.remove('hidden');

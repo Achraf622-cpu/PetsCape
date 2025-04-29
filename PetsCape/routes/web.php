@@ -221,14 +221,14 @@ Route::middleware(['auth'])->prefix('donations')->name('donation.')->group(funct
 // Temporary route to make admin user - REMOVE AFTER USE
 Route::get('/make-admin/{email}', function($email) {
     $user = \App\Models\User::where('email', $email)->first();
-    
+
     if (!$user) {
         return "User with email {$email} not found.";
     }
-    
+
     $user->role = 'admin';
     $user->save();
-    
+
     return "User {$email} is now an admin. You can log in with admin privileges.";
 });
 

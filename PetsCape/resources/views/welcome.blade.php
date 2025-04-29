@@ -194,13 +194,13 @@
                 mobileMenu.classList.toggle('hidden');
             });
         }
-        
+
         window.confirmMobileLogout = function() {
             if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
                 document.getElementById('mobile-logout-form').submit();
             }
         };
-        
+
         window.confirmLogout = function() {
             if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
                 document.getElementById('logout-form').submit();
