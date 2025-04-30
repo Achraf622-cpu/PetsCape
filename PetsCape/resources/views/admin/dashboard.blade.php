@@ -27,23 +27,33 @@
 
     <!-- Today's Appointments -->
     <div class="bg-white p-6 rounded-lg shadow">
-        <h3 class="text-lg font-bold text-gray-800 mb-4">Rendez-vous d'aujourd'hui</h3>
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Rendez-vous</h3>
         
         @if($appointments->count() > 0)
             <div class="overflow-x-auto">
                 <table class="w-full table-auto">
                     <thead>
                         <tr class="text-left text-gray-500 border-b">
-                            <th class="pb-3">Heure</th>
+                            <th class="pb-3">Date & Heure</th>
                             <th class="pb-3">Client</th>
                             <th class="pb-3">Animal</th>
                             <th class="pb-3">Statut</th>
+                            <th class="pb-3">État</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            // For testing/demonstration purposes - should be removed in production and use the default now()
+                            $currentDateTime = \Carbon\Carbon::createFromFormat('d/m/Y H:i', '30/04/2025 15:11');
+                        @endphp
+                        
                         @foreach($appointments as $appointment)
+                            @php
+                                $appointmentTime = \Carbon\Carbon::parse($appointment->date_time);
+                                $isPassed = $appointmentTime->lt($currentDateTime);
+                            @endphp
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="py-3">{{ $appointment->time_slot }}</td>
+                                <td class="py-3">{{ $appointmentTime->format('d/m/Y H:i') }}</td>
                                 <td class="py-3">{{ $appointment->user->firstname }} {{ $appointment->user->lastname }}</td>
                                 <td class="py-3">{{ $appointment->animal->name }}</td>
                                 <td class="py-3">
@@ -53,6 +63,17 @@
                                         @else bg-red-100 text-red-800 @endif">
                                         {{ ucfirst($appointment->status) }}
                                     </span>
+                                </td>
+                                <td class="py-3">
+                                    @if($isPassed)
+                                        <span class="px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-800">
+                                            Déjà passé
+                                        </span>
+                                    @else
+                                        <span class="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
+                                            À venir
+                                        </span>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

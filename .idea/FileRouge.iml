@@ -119,6 +119,11 @@
       <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/http-client-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/symfony/mailgun-mailer" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/laravel/ui" />
+      <excludeFolder url="file://$MODULE_DIR$/PetsCape/vendor/stripe/stripe-php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
