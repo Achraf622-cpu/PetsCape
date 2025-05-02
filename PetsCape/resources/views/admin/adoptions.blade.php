@@ -129,4 +129,36 @@
             <p class="text-gray-500">Aucune adoption enregistrée.</p>
         @endif
     </div>
+
+    <!-- Message Modal -->
+    <div id="messageModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-800" id="messageModalTitle">Message de demande d'adoption</h3>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                    <span class="text-xl">×</span>
+                </button>
+            </div>
+            <div class="mb-6">
+                <p id="messageModalContent" class="text-gray-600 whitespace-pre-line"></p>
+            </div>
+            <div class="text-right">
+                <button onclick="closeModal()" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200">
+                    Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showMessage(message, username) {
+            document.getElementById('messageModalTitle').textContent = `Message de ${username}`;
+            document.getElementById('messageModalContent').textContent = message;
+            document.getElementById('messageModal').classList.remove('hidden');
+        }
+        
+        function closeModal() {
+            document.getElementById('messageModal').classList.add('hidden');
+        }
+    </script>
 @endsection
