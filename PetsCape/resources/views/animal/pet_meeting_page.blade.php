@@ -86,38 +86,79 @@
                         @auth
                             @php
                                 $userAppointments = $animal->appointments()->where('user_id', auth()->id())->get();
+                                $currentDateTime = \Carbon\Carbon::now();
+                                $upcomingAppointments = $userAppointments->filter(function($appointment) use ($currentDateTime) {
+                                    return \Carbon\Carbon::parse($appointment->date_time)->gt($currentDateTime);
+                                });
+                                $pastAppointments = $userAppointments->filter(function($appointment) use ($currentDateTime) {
+                                    return \Carbon\Carbon::parse($appointment->date_time)->lt($currentDateTime);
+                                });
                             @endphp
                             
                             @if($userAppointments->count() > 0)
                                 <div class="mb-6 p-4 bg-[#FFF5F5] rounded-xl">
                                     <h3 class="font-bold text-[#2F2E41] mb-2">Vos rendez-vous avec {{ $animal->name }}</h3>
-                                    <div class="space-y-3">
-                                        @foreach($userAppointments as $appointment)
-                                            <div class="flex justify-between items-center p-3 bg-white rounded-lg">
-                                                <div>
-                                                    <p class="font-medium text-[#2F2E41]">{{ \Carbon\Carbon::parse($appointment->date_time)->format('d/m/Y à H:i') }}</p>
-                                                    <span class="text-xs px-2 py-1 rounded-full 
-                                                        @if($appointment->status === 'confirmed') bg-green-100 text-green-800
-                                                        @elseif($appointment->status === 'pending') bg-yellow-100 text-yellow-800
-                                                        @elseif($appointment->status === 'cancelled') bg-red-100 text-red-800
-                                                        @else bg-blue-100 text-blue-800 @endif">
-                                                        {{ $appointment->status === 'pending' ? 'En attente' : 
-                                                           ($appointment->status === 'confirmed' ? 'Confirmé' : 
-                                                           ($appointment->status === 'cancelled' ? 'Annulé' : 'Terminé')) }}
-                                                    </span>
+                                    
+                                    @if($upcomingAppointments->count() > 0)
+                                        <h4 class="text-sm text-gray-600 mb-1">Prochains rendez-vous</h4>
+                                        <div class="space-y-3 mb-4">
+                                            @foreach($upcomingAppointments as $appointment)
+                                                <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                                                    <div>
+                                                        <p class="font-medium text-[#2F2E41]">{{ \Carbon\Carbon::parse($appointment->date_time)->format('d/m/Y à H:i') }}</p>
+                                                        <span class="text-xs px-2 py-1 rounded-full 
+                                                            @if($appointment->status === 'confirmed') bg-green-100 text-green-800
+                                                            @elseif($appointment->status === 'pending') bg-yellow-100 text-yellow-800
+                                                            @elseif($appointment->status === 'cancelled') bg-red-100 text-red-800
+                                                            @elseif($appointment->status === 'completed') bg-blue-100 text-blue-800
+                                                            @else bg-gray-100 text-gray-800 @endif">
+                                                            {{ $appointment->status === 'pending' ? 'En attente' : 
+                                                               ($appointment->status === 'confirmed' ? 'Confirmé' : 
+                                                               ($appointment->status === 'cancelled' ? 'Annulé' : 
+                                                               ($appointment->status === 'completed' ? 'Terminé' : 'Expiré'))) }}
+                                                        </span>
+                                                    </div>
+                                                    @if($appointment->status === 'pending' || $appointment->status === 'confirmed')
+                                                        <form method="POST" action="{{ route('appointments.cancel', $appointment) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="text-sm text-red-600 hover:text-red-800">
+                                                                Annuler
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
-                                                @if($appointment->status === 'pending' || $appointment->status === 'confirmed')
-                                                    <form method="POST" action="{{ route('appointments.cancel', $appointment) }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="text-sm text-red-600 hover:text-red-800">
-                                                            Annuler
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    
+                                    @if($pastAppointments->count() > 0)
+                                        <h4 class="text-sm text-gray-600 mb-1">Rendez-vous passés</h4>
+                                        <div class="space-y-3">
+                                            @foreach($pastAppointments->take(3) as $appointment)
+                                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                                    <div>
+                                                        <p class="font-medium text-gray-500">{{ \Carbon\Carbon::parse($appointment->date_time)->format('d/m/Y à H:i') }}</p>
+                                                        <span class="text-xs px-2 py-1 rounded-full 
+                                                            @if($appointment->status === 'completed') bg-blue-100 text-blue-800
+                                                            @elseif($appointment->status === 'cancelled') bg-red-100 text-red-800
+                                                            @elseif($appointment->status === 'expired') bg-gray-100 text-gray-800
+                                                            @else bg-gray-100 text-gray-800 @endif">
+                                                            {{ $appointment->status === 'completed' ? 'Terminé' : 
+                                                               ($appointment->status === 'cancelled' ? 'Annulé' : 
+                                                               ($appointment->status === 'expired' ? 'Expiré' : 'Passé')) }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            
+                                            @if($pastAppointments->count() > 3)
+                                                <p class="text-xs text-gray-500 text-center mt-2">
+                                                    + {{ $pastAppointments->count() - 3 }} autres rendez-vous passés
+                                                </p>
+                                            @endif
+                                        </div>
+                                    @endif
                                 </div>
                             @endif
                         @endauth
