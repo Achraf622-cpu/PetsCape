@@ -208,6 +208,96 @@
                             @endguest
                         </form>
 
+                        @auth
+                            <div class="mt-8 pt-8 border-t border-gray-200">
+                                <div class="text-center space-y-4 mb-6">
+                                    <h2 class="text-2xl font-bold text-[#2F2E41]">Adopter {{ $animal->name }}</h2>
+                                    <p class="text-gray-600">Remplissez le formulaire ci-dessous pour faire une demande d'adoption</p>
+                                </div>
+
+                                @if($animal->status !== 'available')
+                                    <div class="p-4 bg-yellow-50 text-yellow-800 rounded-xl text-center mb-6">
+                                        <p class="font-medium">{{ $animal->name }} n'est pas disponible à l'adoption pour le moment.</p>
+                                        <p class="text-sm">Statut actuel: 
+                                            @if($animal->status === 'reserved')
+                                                Réservé
+                                            @elseif($animal->status === 'adopted')
+                                                Déjà adopté
+                                            @else
+                                                En traitement
+                                            @endif
+                                        </p>
+                                    </div>
+                                @else
+                                    @php
+                                        $existingRequest = \App\Models\AdoptionRequest::where('user_id', auth()->id())
+                                            ->where('animal_id', $animal->id)
+                                            ->first();
+                                    @endphp
+
+                                    @if($existingRequest)
+                                        <div class="mb-6 p-4 bg-[#FFF5F5] rounded-xl">
+                                            <h3 class="font-bold text-[#2F2E41] mb-2">Votre demande d'adoption</h3>
+                                            <div class="p-3 bg-white rounded-lg mb-3">
+                                                <div class="flex justify-between items-center mb-2">
+                                                    <p class="font-medium text-[#2F2E41]">Demande soumise le {{ \Carbon\Carbon::parse($existingRequest->created_at)->format('d/m/Y') }}</p>
+                                                    <span class="text-xs px-2 py-1 rounded-full 
+                                                        @if($existingRequest->status === 'approved') bg-green-100 text-green-800
+                                                        @elseif($existingRequest->status === 'pending') bg-yellow-100 text-yellow-800
+                                                        @else bg-red-100 text-red-800 @endif">
+                                                        {{ $existingRequest->status === 'pending' ? 'En attente' : 
+                                                           ($existingRequest->status === 'approved' ? 'Approuvée' : 'Refusée') }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-gray-600 text-sm">{{ $existingRequest->message }}</p>
+                                            </div>
+                                            @if($existingRequest->status === 'pending')
+                                                <form method="POST" action="{{ route('adoption-requests.cancel', $existingRequest->id) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="w-full py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors">
+                                                        Annuler ma demande
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <form class="space-y-6" action="{{ route('adoption-requests.store') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="animal_id" value="{{ $animal->id }}">
+
+                                            <div class="space-y-2">
+                                                <label class="block text-[#2F2E41] font-semibold">Pourquoi souhaitez-vous adopter {{ $animal->name }} ?</label>
+                                                <textarea
+                                                    name="message"
+                                                    rows="5"
+                                                    class="w-full px-4 py-3 rounded-xl border-2 border-[#FFE3E3] focus:border-[#FF6B6B] focus:outline-none"
+                                                    placeholder="Décrivez votre situation, vos motivations, et pourquoi vous pensez être la famille idéale pour {{ $animal->name }}..."
+                                                    required
+                                                ></textarea>
+                                            </div>
+
+                                            <button type="submit" class="w-full py-4 bg-[#FF6B6B] text-white rounded-xl hover:bg-[#FF8787] transition-colors">
+                                                Faire une demande d'adoption
+                                            </button>
+                                        </form>
+                                    @endif
+                                @endif
+                            </div>
+                        @else
+                            <div class="mt-8 pt-8 border-t border-gray-200">
+                                <div class="text-center space-y-4 mb-6">
+                                    <h2 class="text-2xl font-bold text-[#2F2E41]">Adopter {{ $animal->name }}</h2>
+                                </div>
+                                <div class="p-4 bg-[#FFF5F5] rounded-xl text-center">
+                                    <p class="text-gray-600 mb-2">Vous devez être connecté pour faire une demande d'adoption</p>
+                                    <a href="{{ route('login') }}" class="text-[#FF6B6B] hover:text-[#FF8787] font-semibold">Se connecter</a>
+                                    <span class="text-gray-600 mx-2">ou</span>
+                                    <a href="{{ route('register') }}" class="text-[#FF6B6B] hover:text-[#FF8787] font-semibold">S'inscrire</a>
+                                </div>
+                            </div>
+                        @endauth
+
                         <div class="mt-6 p-4 bg-[#FFF5F5] rounded-xl">
                             <div class="flex items-center gap-4">
                                 <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
