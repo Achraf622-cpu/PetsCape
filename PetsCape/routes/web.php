@@ -18,6 +18,7 @@ use App\Models\Animal;
 use App\Models\Appointment;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\ReportCommentController;
+use App\Http\Controllers\AdoptionRequestController;
 
 Auth::routes(['verify' => true]);
 Auth::routes();
@@ -174,6 +175,15 @@ Route::get('/adoption/{animal}/meeting', [AnimalController::class, 'meetingPage'
 Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointments.store')->middleware('auth');
 Route::patch('/appointment/{appointment}/status', [AppointmentController::class, 'updateStatus'])->name('appointments.update-status')->middleware('auth');
 Route::delete('/appointment/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel')->middleware('auth');
+
+// Routes pour les demandes d'adoption
+Route::middleware(['auth'])->group(function () {
+    Route::post('/adoption-requests', [AdoptionRequestController::class, 'store'])->name('adoption-requests.store');
+    Route::delete('/adoption-requests/{adoptionRequest}/cancel', [AdoptionRequestController::class, 'cancel'])->name('adoption-requests.cancel');
+    Route::patch('/adoption-requests/{adoptionRequest}/status', [AdoptionRequestController::class, 'updateStatus'])
+        ->name('adoption-requests.update-status')
+        ->middleware('can:admin');
+});
 
 // Animal report routes
 Route::middleware(['auth'])->group(function () {
