@@ -6,9 +6,38 @@ use App\Models\Animal;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class AppointmentController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // Automatically update past appointments
+        $this->updatePastAppointments();
+    }
+    
+    /**
+     * Update the status of past appointments.
+     */
+    private function updatePastAppointments()
+    {
+        // Find confirmed appointments that are in the past and mark them as completed
+        Appointment::where('status', 'confirmed')
+            ->where('date_time', '<', Carbon::now())
+            ->update(['status' => 'completed']);
+            
+        // Find pending appointments that are in the past and mark them as expired
+        Appointment::where('status', 'pending')
+            ->where('date_time', '<', Carbon::now())
+            ->update(['status' => 'expired']);
+    }
+
     /**
      * Créer un nouveau rendez-vous
      */
