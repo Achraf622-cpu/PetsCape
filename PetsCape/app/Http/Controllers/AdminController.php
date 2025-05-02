@@ -81,7 +81,12 @@ class AdminController extends Controller
             ->orderBy('updated_at', 'desc')
             ->paginate(15);
             
-        return view('admin.adoptions', compact('adoptions'));
+        $adoptionRequests = \App\Models\AdoptionRequest::with(['animal', 'user'])
+            ->where('status', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        return view('admin.adoptions', compact('adoptions', 'adoptionRequests'));
     }
     
     /**
