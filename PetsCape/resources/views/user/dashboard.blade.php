@@ -357,33 +357,86 @@
             <div class="bg-white p-6 rounded-2xl shadow-sm mb-8">
                 <h2 class="text-xl font-bold text-[#2F2E41] mb-6">Mes adoptions</h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 gap-4">
                     @if(isset($userAppointments) && count($userAppointments) > 0)
-                        @foreach($userAppointments as $appointment)
-                            <div class="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
-                                <img src="{{ $appointment->animal->image ? asset('storage/'.$appointment->animal->image) : asset('images/default-pet.jpg') }}" alt="{{ $appointment->animal->name }}" class="w-full h-48 object-cover">
-                                <div class="p-4">
-                                    <h3 class="font-bold text-[#2F2E41]">{{ $appointment->animal->name }}</h3>
-                                    <p class="text-sm text-gray-600 mb-2">{{ $appointment->animal->species->name ?? 'Animal' }}</p>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xs px-2 py-1 rounded-full
-                                            @if($appointment->status === 'confirmed') bg-green-100 text-green-800
-                                            @elseif($appointment->status === 'pending') bg-yellow-100 text-yellow-800
-                                            @elseif($appointment->status === 'cancelled') bg-red-100 text-red-800
-                                            @else bg-blue-100 text-blue-800 @endif">
-                                            {{ $appointment->status === 'pending' ? 'En attente' : 
-                                               ($appointment->status === 'confirmed' ? 'Confirmé' : 
-                                               ($appointment->status === 'cancelled' ? 'Annulé' : 'Terminé')) }}
-                                        </span>
-                                        <a href="{{ route('animals.show', $appointment->animal) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787]">
-                                            Voir l'animal
-                                        </a>
+                        @php
+                            $currentDateTime = \Carbon\Carbon::now();
+                            $upcomingAppointments = $userAppointments->filter(function($appointment) use ($currentDateTime) {
+                                return \Carbon\Carbon::parse($appointment->date_time)->gt($currentDateTime);
+                            });
+                            $pastAppointments = $userAppointments->filter(function($appointment) use ($currentDateTime) {
+                                return \Carbon\Carbon::parse($appointment->date_time)->lt($currentDateTime);
+                            });
+                        @endphp
+                        
+                        @if($upcomingAppointments->count() > 0)
+                            <h3 class="text-md font-semibold text-gray-700 mb-3">Rendez-vous à venir</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                @foreach($upcomingAppointments as $appointment)
+                                    <div class="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+                                        <img src="{{ $appointment->animal->image ? asset('storage/'.$appointment->animal->image) : asset('images/default-pet.jpg') }}" alt="{{ $appointment->animal->name }}" class="w-full h-48 object-cover">
+                                        <div class="p-4">
+                                            <h3 class="font-bold text-[#2F2E41]">{{ $appointment->animal->name }}</h3>
+                                            <p class="text-sm text-gray-600 mb-2">{{ \Carbon\Carbon::parse($appointment->date_time)->format('d/m/Y à H:i') }}</p>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-xs px-2 py-1 rounded-full
+                                                    @if($appointment->status === 'confirmed') bg-green-100 text-green-800
+                                                    @elseif($appointment->status === 'pending') bg-yellow-100 text-yellow-800
+                                                    @elseif($appointment->status === 'cancelled') bg-red-100 text-red-800
+                                                    @else bg-blue-100 text-blue-800 @endif">
+                                                    {{ $appointment->status === 'pending' ? 'En attente' : 
+                                                       ($appointment->status === 'confirmed' ? 'Confirmé' : 
+                                                       ($appointment->status === 'cancelled' ? 'Annulé' : 'Terminé')) }}
+                                                </span>
+                                                <a href="{{ route('animals.show', $appointment->animal) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787]">
+                                                    Voir l'animal
+                                                </a>
+                                            </div>
+                                            @if($appointment->status === 'pending' || $appointment->status === 'confirmed')
+                                                <form method="POST" action="{{ route('appointments.cancel', $appointment) }}" class="mt-3">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="w-full text-sm text-red-600 hover:text-red-800 border border-red-200 py-1 px-2 rounded-lg hover:bg-red-50 transition-colors">
+                                                        Annuler ce rendez-vous
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        @endif
+                        
+                        @if($pastAppointments->count() > 0)
+                            <h3 class="text-md font-semibold text-gray-700 mb-3">Historique des rendez-vous</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                @foreach($pastAppointments as $appointment)
+                                    <div class="border border-gray-100 rounded-xl overflow-hidden bg-gray-50">
+                                        <img src="{{ $appointment->animal->image ? asset('storage/'.$appointment->animal->image) : asset('images/default-pet.jpg') }}" alt="{{ $appointment->animal->name }}" class="w-full h-48 object-cover">
+                                        <div class="p-4">
+                                            <h3 class="font-bold text-[#2F2E41]">{{ $appointment->animal->name }}</h3>
+                                            <p class="text-sm text-gray-600 mb-2">{{ \Carbon\Carbon::parse($appointment->date_time)->format('d/m/Y à H:i') }}</p>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-xs px-2 py-1 rounded-full
+                                                    @if($appointment->status === 'completed') bg-blue-100 text-blue-800
+                                                    @elseif($appointment->status === 'cancelled') bg-red-100 text-red-800
+                                                    @elseif($appointment->status === 'expired') bg-gray-100 text-gray-800
+                                                    @else bg-gray-100 text-gray-800 @endif">
+                                                    {{ $appointment->status === 'completed' ? 'Terminé' : 
+                                                       ($appointment->status === 'cancelled' ? 'Annulé' : 
+                                                       ($appointment->status === 'expired' ? 'Expiré' : 'Passé')) }}
+                                                </span>
+                                                <a href="{{ route('animals.show', $appointment->animal) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787]">
+                                                    Voir l'animal
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     @else
-                        <p class="text-gray-600 text-center py-4 col-span-3">Vous n'avez pas encore d'adoptions.</p>
+                        <p class="text-gray-600 text-center py-4">Vous n'avez pas encore d'adoptions.</p>
                     @endif
                 </div>
             </div>
