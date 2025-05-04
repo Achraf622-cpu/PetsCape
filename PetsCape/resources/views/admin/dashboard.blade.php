@@ -53,10 +53,10 @@
                                 $isPassed = $appointmentTime->lt($currentDateTime);
                             @endphp
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="py-3">{{ $appointmentTime->format('d/m/Y H:i') }}</td>
-                                <td class="py-3">{{ $appointment->user->firstname }} {{ $appointment->user->lastname }}</td>
-                                <td class="py-3">{{ $appointment->animal->name }}</td>
-                                <td class="py-3">
+                                <td class="py-3 px-4 md:px-3 text-xs md:text-sm">{{ $appointmentTime->format('d/m/Y H:i') }}</td>
+                                <td class="py-3 px-4 md:px-3 text-xs md:text-sm">{{ $appointment->user->firstname }} {{ $appointment->user->lastname }}</td>
+                                <td class="py-3 px-4 md:px-3 text-xs md:text-sm">{{ $appointment->animal->name }}</td>
+                                <td class="py-3 px-4 md:px-3">
                                     <span class="px-2 py-1 rounded-full text-xs 
                                         @if($appointment->status == 'confirmed') bg-green-100 text-green-800
                                         @elseif($appointment->status == 'pending') bg-yellow-100 text-yellow-800
@@ -64,7 +64,7 @@
                                         {{ ucfirst($appointment->status) }}
                                     </span>
                                 </td>
-                                <td class="py-3">
+                                <td class="py-3 px-4 md:px-3">
                                     @if($isPassed)
                                         <span class="px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-800">
                                             Déjà passé
@@ -79,6 +79,38 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+        @else
+            <p class="text-gray-500">Aucun rendez-vous prévu aujourd'hui.</p>
+        @endif
+    </div>
+    
+    <!-- Mobile Appointments Alternative View (Visible only on smaller screens) -->
+    <div class="block md:hidden mt-8">
+        <h3 class="text-base font-bold text-gray-800 mb-4">Rendez-vous (vue mobile)</h3>
+        
+        @if($appointments->count() > 0)
+            <div class="space-y-4">
+                @foreach($appointments as $appointment)
+                    @php
+                        $appointmentTime = \Carbon\Carbon::parse($appointment->date_time);
+                        $isPassed = $appointmentTime->lt($currentDateTime);
+                    @endphp
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold">{{ $appointment->animal->name }} & {{ $appointment->user->firstname }}</p>
+                                <p class="text-xs text-gray-500">{{ $appointmentTime->format('d/m/Y H:i') }}</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full text-xs 
+                                @if($appointment->status == 'confirmed') bg-green-100 text-green-800
+                                @elseif($appointment->status == 'pending') bg-yellow-100 text-yellow-800
+                                @else bg-red-100 text-red-800 @endif">
+                                {{ ucfirst($appointment->status) }}
+                            </span>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         @else
             <p class="text-gray-500">Aucun rendez-vous prévu aujourd'hui.</p>
