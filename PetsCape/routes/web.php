@@ -17,11 +17,9 @@ use App\Http\Controllers\HomeController;
 use App\Models\Animal;
 use App\Models\Appointment;
 use Illuminate\Support\Carbon;
-use App\Http\Controllers\ReportCommentController;
 use App\Http\Controllers\AdoptionRequestController;
 
 Auth::routes(['verify' => true]);
-Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -40,55 +38,26 @@ Route::post('/logout', [LogoutController::class, 'logout'])
 
 // Route for user dashboard combining styles from user_dashboard and functionality from dashboard
 Route::get('/user/dashboard', function () {
+    // Get Reports data from AnimalReports only
     $myReports = \App\Models\AnimalReport::where('user_id', auth()->id())
         ->with('species')
         ->latest()
         ->take(5)
         ->get();
 
+    // Get lost reports
     $lostReports = \App\Models\AnimalReport::where('is_found', false)
         ->with(['species', 'user'])
         ->latest()
         ->take(5)
         ->get();
 
+    // Get found reports
     $foundReports = \App\Models\AnimalReport::where('is_found', true)
         ->with(['species', 'user'])
         ->latest()
         ->take(5)
         ->get();
-
-    // Add Reports data
-    $myOldReports = \App\Models\Report::where('user_id', auth()->id())
-        ->with('species')
-        ->latest()
-        ->take(5)
-        ->get();
-
-    // Combine new and old reports for display
-    $combinedMyReports = $myReports->merge($myOldReports)
-        ->sortByDesc('created_at')
-        ->take(5);
-
-    $oldLostReports = \App\Models\Report::where('is_found', false)
-        ->with(['species', 'user'])
-        ->latest()
-        ->take(5)
-        ->get();
-
-    $combinedLostReports = $lostReports->merge($oldLostReports)
-        ->sortByDesc('created_at')
-        ->take(5);
-
-    $oldFoundReports = \App\Models\Report::where('is_found', true)
-        ->with(['species', 'user'])
-        ->latest()
-        ->take(5)
-        ->get();
-
-    $combinedFoundReports = $foundReports->merge($oldFoundReports)
-        ->sortByDesc('created_at')
-        ->take(5);
     
     // Get user appointments
     $userAppointments = \App\Models\Appointment::where('user_id', auth()->id())
@@ -97,9 +66,9 @@ Route::get('/user/dashboard', function () {
         ->get();
 
     return view('user.dashboard', [
-        'myReports' => $combinedMyReports,
-        'lostReports' => $combinedLostReports,
-        'foundReports' => $combinedFoundReports,
+        'myReports' => $myReports,
+        'lostReports' => $lostReports,
+        'foundReports' => $foundReports,
         'userAppointments' => $userAppointments
     ]);
 })->middleware(['auth', 'verified'])->name('user.dashboard');
@@ -196,24 +165,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/reports/{report}', [AnimalReportController::class, 'destroy'])->name('reports.destroy');
     Route::patch('/reports/{report}/status', [AnimalReportController::class, 'changeStatus'])->name('reports.change-status');
     Route::get('/my-reports', [AnimalReportController::class, 'myReports'])->name('reports.my');
-    
-    // Route for report comments
-    Route::post('/reports/{report}/comments', [ReportCommentController::class, 'store'])->name('reports.comments.store');
 });
 
-// Routes pour les anciens signalements
-Route::middleware(['auth'])->prefix('old-reports')->name('old-reports.')->group(function () {
-    Route::get('/', [\App\Http\Controllers\ReportController::class, 'index'])->name('index');
-    Route::get('/create', [\App\Http\Controllers\ReportController::class, 'create'])->name('create');
-    Route::post('/', [\App\Http\Controllers\ReportController::class, 'store'])->name('store');
-    Route::get('/{report}', [\App\Http\Controllers\ReportController::class, 'show'])->name('show');
-    Route::get('/{report}/edit', [\App\Http\Controllers\ReportController::class, 'edit'])->name('edit');
-    Route::put('/{report}', [\App\Http\Controllers\ReportController::class, 'update'])->name('update');
-    Route::delete('/{report}', [\App\Http\Controllers\ReportController::class, 'destroy'])->name('destroy');
-    Route::patch('/{report}/status', [\App\Http\Controllers\ReportController::class, 'changeStatus'])->name('changeStatus');
-});
-
-// User settings routes
+// Routes for user settings
 Route::middleware(['auth'])->prefix('settings')->name('settings.')->group(function () {
     Route::get('/', [UserSettingsController::class, 'index'])->name('index');
 

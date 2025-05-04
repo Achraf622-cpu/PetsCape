@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Report;
-use App\Policies\ReportPolicy;
+use App\Models\AnimalReport;
+use App\Policies\AnimalReportPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Report::class => ReportPolicy::class,
+        AnimalReport::class => AnimalReportPolicy::class,
     ];
 
     /**

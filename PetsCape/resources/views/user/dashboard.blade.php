@@ -216,19 +216,11 @@
                                         <div class="flex justify-between">
                                             <h3 class="font-bold text-[#2F2E41]">{{ $report->name ?: $report->species->name }}</h3>
                                             <span class="text-sm text-gray-600">
-                                                @if ($report instanceof \App\Models\AnimalReport)
-                                                    {{ $report->date_reported->diffForHumans() }}
-                                                @else
-                                                    {{ $report->date_of_incident ? $report->date_of_incident->diffForHumans() : $report->created_at->diffForHumans() }}
-                                                @endif
+                                                {{ $report->date_reported->diffForHumans() }}
                                             </span>
                                         </div>
                                         <p class="text-sm text-gray-600 mt-1">{{ $report->location }}</p>
-                                        @if ($report instanceof \App\Models\AnimalReport)
-                                            <a href="{{ route('reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
-                                        @else
-                                            <a href="{{ route('old-reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
-                                        @endif
+                                        <a href="{{ route('reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -254,19 +246,11 @@
                                         <div class="flex justify-between">
                                             <h3 class="font-bold text-[#2F2E41]">{{ $report->name ?: $report->species->name }}</h3>
                                             <span class="text-sm text-gray-600">
-                                                @if ($report instanceof \App\Models\AnimalReport)
-                                                    {{ $report->date_reported->diffForHumans() }}
-                                                @else
-                                                    {{ $report->date_of_incident ? $report->date_of_incident->diffForHumans() : $report->created_at->diffForHumans() }}
-                                                @endif
+                                                {{ $report->date_reported->diffForHumans() }}
                                             </span>
                                         </div>
                                         <p class="text-sm text-gray-600 mt-1">{{ $report->location }}</p>
-                                        @if ($report instanceof \App\Models\AnimalReport)
-                                            <a href="{{ route('reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
-                                        @else
-                                            <a href="{{ route('old-reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
-                                        @endif
+                                        <a href="{{ route('reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -317,29 +301,17 @@
                                             @endif
                                         </td>
                                         <td class="py-3">
-                                            @if ($report instanceof \App\Models\AnimalReport)
-                                                <span class="px-3 py-1 rounded-full text-sm
-                                                    {{ $report->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : '' }}
-                                                    {{ $report->status === 'resolved' ? 'bg-green-100 text-green-700' : '' }}
-                                                    {{ $report->status === 'cancelled' ? 'bg-gray-100 text-gray-700' : '' }}">
-                                                    {{ $report->status === 'pending' ? 'En attente' :
-                                                    ($report->status === 'resolved' ? 'Résolu' : 'Annulé') }}
-                                                </span>
-                                            @else
-                                                <span class="px-3 py-1 rounded-full text-sm
-                                                    {{ !$report->is_resolved ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700' }}">
-                                                    {{ $report->is_resolved ? 'Résolu' : 'En attente' }}
-                                                </span>
-                                            @endif
+                                            <span class="px-3 py-1 rounded-full text-sm
+                                                {{ $report->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : '' }}
+                                                {{ $report->status === 'resolved' ? 'bg-green-100 text-green-700' : '' }}
+                                                {{ $report->status === 'cancelled' ? 'bg-gray-100 text-gray-700' : '' }}">
+                                                {{ $report->status === 'pending' ? 'En attente' :
+                                                ($report->status === 'resolved' ? 'Résolu' : 'Annulé') }}
+                                            </span>
                                         </td>
                                         <td class="py-3">
-                                            @if ($report instanceof \App\Models\AnimalReport)
-                                                <a href="{{ route('reports.show', $report) }}" class="text-[#FF6B6B] hover:text-[#FF8787] mr-2">Voir</a>
-                                                <a href="{{ route('reports.edit', $report) }}" class="text-[#FF6B6B] hover:text-[#FF8787]">Modifier</a>
-                                            @else
-                                                <a href="{{ route('old-reports.show', $report) }}" class="text-[#FF6B6B] hover:text-[#FF8787] mr-2">Voir</a>
-                                                <a href="{{ route('old-reports.edit', $report) }}" class="text-[#FF6B6B] hover:text-[#FF8787]">Modifier</a>
-                                            @endif
+                                            <a href="{{ route('reports.show', $report) }}" class="text-[#FF6B6B] hover:text-[#FF8787] mr-2">Voir</a>
+                                            <a href="{{ route('reports.edit', $report) }}" class="text-[#FF6B6B] hover:text-[#FF8787]">Modifier</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -549,19 +521,11 @@
                                         <div class="flex justify-between">
                                             <h3 class="font-bold text-[#2F2E41]">{{ $report->name ?: $report->species->name }}</h3>
                                             <span class="text-sm text-gray-600">
-                                                @if ($report instanceof \App\Models\AnimalReport)
-                                                    {{ $report->date_reported->diffForHumans() }}
-                                                @else
-                                                    {{ $report->date_of_incident ? $report->date_of_incident->diffForHumans() : $report->created_at->diffForHumans() }}
-                                                @endif
+                                                {{ $report->date_reported->diffForHumans() }}
                                             </span>
                                         </div>
                                         <p class="text-sm text-gray-600 mt-1">{{ $report->location }}</p>
-                                        @if ($report instanceof \App\Models\AnimalReport)
-                                            <a href="{{ route('reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
-                                        @else
-                                            <a href="{{ route('old-reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
-                                        @endif
+                                        <a href="{{ route('reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -584,19 +548,11 @@
                                         <div class="flex justify-between">
                                             <h3 class="font-bold text-[#2F2E41]">{{ $report->name ?: $report->species->name }}</h3>
                                             <span class="text-sm text-gray-600">
-                                                @if ($report instanceof \App\Models\AnimalReport)
-                                                    {{ $report->date_reported->diffForHumans() }}
-                                                @else
-                                                    {{ $report->date_of_incident ? $report->date_of_incident->diffForHumans() : $report->created_at->diffForHumans() }}
-                                                @endif
+                                                {{ $report->date_reported->diffForHumans() }}
                                             </span>
                                         </div>
                                         <p class="text-sm text-gray-600 mt-1">{{ $report->location }}</p>
-                                        @if ($report instanceof \App\Models\AnimalReport)
-                                            <a href="{{ route('reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
-                                        @else
-                                            <a href="{{ route('old-reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
-                                        @endif
+                                        <a href="{{ route('reports.show', $report) }}" class="text-sm text-[#FF6B6B] hover:text-[#FF8787] mt-2 inline-block">Voir plus</a>
                                     </div>
                                 </div>
                             @endforeach
