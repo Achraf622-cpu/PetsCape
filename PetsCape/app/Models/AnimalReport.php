@@ -58,12 +58,4 @@ class AnimalReport extends Model
     {
         return $this->belongsTo(Species::class);
     }
-
-    /**
-     * Get the comments for this report.
-     */
-    public function comments()
-    {
-        return $this->hasMany(ReportComment::class, 'report_id');
-    }
 } 
