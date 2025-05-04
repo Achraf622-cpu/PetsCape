@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class rAppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
