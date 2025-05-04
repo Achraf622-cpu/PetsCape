@@ -1,4 +1,11 @@
-<aside class="fixed left-0 top-0 w-64 h-screen bg-white shadow-lg flex flex-col">
+<aside class="fixed md:relative left-0 top-0 w-64 h-screen bg-white shadow-lg flex flex-col z-20 overflow-y-auto">
+    <!-- Mobile close button - only visible on small screens -->
+    <button id="close-sidebar" class="md:hidden absolute top-4 right-4 p-2 text-gray-600 hover:text-gray-900">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+    
     <div class="flex flex-col h-full justify-between">
         <!-- Top Section -->
         <div>
@@ -92,3 +99,16 @@
         </div>
     </div>
 </aside>
+
+<script>
+    // Mobile sidebar close button functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const closeButton = document.getElementById('close-sidebar');
+        const sidebar = document.getElementById('sidebar-container');
+        
+        closeButton.addEventListener('click', function() {
+            sidebar.classList.add('-translate-x-full');
+            sidebar.classList.remove('translate-x-0');
+        });
+    });
+</script>
