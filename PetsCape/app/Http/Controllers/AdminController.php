@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Animal;
 use App\Models\Appointment;
 use App\Models\User;
-use App\Models\Report;
 use App\Models\AnimalReport;
 use App\Models\Donation;
 use Illuminate\Http\Request;

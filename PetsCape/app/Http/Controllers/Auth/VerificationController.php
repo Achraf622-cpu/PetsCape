@@ -8,11 +8,12 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class VerificationController extends Controller
 {
-    protected array $middleware = [
-        'auth' => ['*'],
-        'signed' => ['verify'],
-        'throttle:6,1' => ['verify', 'resend'],
-    ];
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('signed')->only('verify');
+        $this->middleware('throttle:6,1')->only(['verify', 'resend']);
+    }
 
     public function notice()
     {
