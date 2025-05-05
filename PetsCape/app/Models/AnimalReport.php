@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AnimalReport extends Model
 {
@@ -57,5 +58,13 @@ class AnimalReport extends Model
     public function species(): BelongsTo
     {
         return $this->belongsTo(Species::class);
+    }
+    
+    /**
+     * Get the found reports for this animal report.
+     */
+    public function foundReports(): HasMany
+    {
+        return $this->hasMany(FoundAnimalReport::class);
     }
 } 
