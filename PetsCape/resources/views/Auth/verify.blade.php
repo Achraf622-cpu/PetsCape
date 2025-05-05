@@ -17,6 +17,14 @@
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
         }
     </style>
+    <script>
+        // Check if user is verified and redirect to dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(auth()->user()->hasVerifiedEmail())
+                window.location.href = "{{ route('dashboard') }}";
+            @endif
+        });
+    </script>
 </head>
 <body class="min-h-screen gradient-bg">
 <div class="min-h-screen flex items-center justify-center p-6">
@@ -27,25 +35,36 @@
         </div>
 
         <div class="space-y-6">
-            <h2 class="text-2xl font-bold text-[#2F2E41]">Vérifiez votre adresse e-mail</h2>
-
-            @if (session('resent'))
+            @if(auth()->user()->hasVerifiedEmail())
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl">
-                    Un nouveau lien de vérification a été envoyé à votre adresse e-mail.
+                    Votre adresse e-mail a été vérifiée avec succès. Vous allez être redirigé vers le tableau de bord...
                 </div>
+                <script>
+                    setTimeout(function() {
+                        window.location.href = "{{ route('dashboard') }}";
+                    }, 2000);
+                </script>
+            @else
+                <h2 class="text-2xl font-bold text-[#2F2E41]">Vérifiez votre adresse e-mail</h2>
+
+                @if (session('resent'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl">
+                        Un nouveau lien de vérification a été envoyé à votre adresse e-mail.
+                    </div>
+                @endif
+
+                <p class="text-gray-600">
+                    Avant de continuer, veuillez vérifier votre e-mail pour un lien de vérification.
+                    Si vous n'avez pas reçu l'e-mail, cliquez sur le bouton ci-dessous pour en recevoir un nouveau.
+                </p>
+
+                <form method="POST" action="{{ route('verification.resend') }}">
+                    @csrf
+                    <button type="submit" class="w-full py-4 bg-[#FF6B6B] text-white rounded-xl hover:bg-[#FF8787] transition-all duration-300">
+                        Renvoyer l'email de vérification
+                    </button>
+                </form>
             @endif
-
-            <p class="text-gray-600">
-                Avant de continuer, veuillez vérifier votre e-mail pour un lien de vérification.
-                Si vous n'avez pas reçu l'e-mail, cliquez sur le bouton ci-dessous pour en recevoir un nouveau.
-            </p>
-
-            <form method="POST" action="{{ route('verification.resend') }}">
-                @csrf
-                <button type="submit" class="w-full py-4 bg-[#FF6B6B] text-white rounded-xl hover:bg-[#FF8787] transition-all duration-300">
-                    Renvoyer l'email de vérification
-                </button>
-            </form>
 
             <p class="text-center text-sm text-gray-600">
                 <a href="/" class="text-[#FF6B6B] hover:text-[#FF8787]">
