@@ -80,7 +80,7 @@ Route::get('/dashboard', function () {
 
 // Routes de vérification d'email
 Route::get('/email/verify', [VerificationController::class, 'notice'])
-    ->middleware(['auth'])
+    ->middleware('auth')
     ->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
