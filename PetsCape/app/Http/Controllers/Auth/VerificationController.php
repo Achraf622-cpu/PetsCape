@@ -15,20 +15,37 @@ class VerificationController extends Controller
         $this->middleware('throttle:6,1')->only(['verify', 'resend']);
     }
 
-    public function notice()
+    public function notice(Request $request)
     {
+        // If already verified, redirect to dashboard
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->route('dashboard');
+        }
+        
         return view('auth.verify');
     }
 
     public function verify(EmailVerificationRequest $request)
     {
+        // If already verified, redirect to dashboard
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->route('dashboard')->with('verified', true);
+        }
+        
         $request->fulfill();
-        return redirect('/dashboard')->with('verified', true);
+        
+        // Add session flash message that will be displayed on the dashboard
+        return redirect()->route('dashboard')->with('success', 'Votre email a été vérifié avec succès!');
     }
 
     public function resend(Request $request)
     {
+        // If already verified, redirect to dashboard
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->route('dashboard');
+        }
+        
         $request->user()->sendEmailVerificationNotification();
-        return back()->with('message', 'Lien de vérification renvoyé!');
+        return back()->with('resent', true);
     }
 }
