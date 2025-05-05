@@ -43,6 +43,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'redirect.if.verified' => \App\Http\Middleware\RedirectIfVerified::class,
     ];
 }
 
