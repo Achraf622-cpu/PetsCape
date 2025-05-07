@@ -51,7 +51,7 @@
             <a href="{{ route('reports.create', ['type' => 'lost']) }}" class="px-4 py-2 bg-[#FF6B6B] text-white rounded-xl hover:bg-[#FF8787]">
                 Signaler un animal perdu
             </a>
-            <a href="{{ route('reports.create', ['type' => 'found']) }}" class="px-4 py-2 bg-[#4ECDC4] text-white rounded-xl hover:bg-[#3DBDB4]">
+            <a href="{{ route('found_reports.select') }}" class="px-4 py-2 bg-[#4ECDC4] text-white rounded-xl hover:bg-[#3DBDB4]">
                 Signaler un animal trouvé
             </a>
         </div>

@@ -18,6 +18,7 @@ use App\Models\Animal;
 use App\Models\Appointment;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\AdoptionRequestController;
+use App\Http\Controllers\FoundAnimalReportController;
 
 Auth::routes(['verify' => true]);
 
@@ -206,5 +207,19 @@ Route::get('/make-admin/{email}', function($email) {
 // Temporary direct route to admin dashboard - REMOVE AFTER TESTING
 Route::get('/direct-admin', [\App\Http\Controllers\AdminController::class, 'dashboard'])
     ->middleware(['auth', 'can:admin']);
+
+// Routes pour les signalements d'animaux trouvés
+Route::middleware(['auth'])->prefix('found-reports')->name('found_reports.')->group(function () {
+    Route::get('/select', [FoundAnimalReportController::class, 'selectLostAnimal'])->name('select');
+    Route::get('/create/{animalReport}', [FoundAnimalReportController::class, 'create'])->name('create');
+    Route::post('/store/{animalReport}', [FoundAnimalReportController::class, 'store'])->name('store');
+    Route::get('/{foundReport}', [FoundAnimalReportController::class, 'show'])->name('show');
+});
+
+// Routes admin pour les signalements d'animaux trouvés
+Route::middleware(['auth', 'can:admin'])->prefix('admin/found-reports')->name('admin.found_reports.')->group(function () {
+    Route::get('/', [FoundAnimalReportController::class, 'index'])->name('index');
+    Route::patch('/{foundReport}/status', [FoundAnimalReportController::class, 'updateStatus'])->name('update-status');
+});
 
 
